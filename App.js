@@ -24,7 +24,7 @@ export default function App(props) {
   React.useEffect(() => {
     async function loadResourcesAndDataAsync() {
       try {
-        this.getPushNotificationPermissions();
+        this.registerForPushNotificationsAsync();
 
         SplashScreen.preventAutoHide();
 
@@ -70,12 +70,33 @@ export default function App(props) {
     }
     console.log(finalStatus)
 
+    console.log(user)
+
     // Get the token that uniquely identifies this device
     let token = await Notifications.getExpoPushTokenAsync();
 
     var updates = {}
     updates['/expoToken'] = token
-    
+
+    fetch('10.5.116.110:3000/api/users/registerForPushNotifications/1', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        expoToken: updates,
+      }),
+    })
+    .then((response) => response.json())
+    .then((responseJson) => {
+        return responseJson.movies;
+    })
+    .catch((error) => {
+        console.error(error);
+    });
+
+    console.log(response)
   }
 
   if (!isLoadingComplete && !props.skipLoadingScreen) {
