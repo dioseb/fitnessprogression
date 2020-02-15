@@ -9,8 +9,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import BottomTabNavigator from './navigation/BottomTabNavigator';
 import useLinking from './navigation/useLinking';
 
-import { Notifications } from 'expo';
-import * as Permissions from 'expo-permissions';
+import NotificationsApi from './api/notifications/Notifications_Api';
 
 const Stack = createStackNavigator();
 
@@ -24,7 +23,7 @@ export default function App(props) {
   React.useEffect(() => {
     async function loadResourcesAndDataAsync() {
       try {
-        this.registerForPushNotificationsAsync();
+        new NotificationsApi().registerForPushNotificationsAsync();
 
         SplashScreen.preventAutoHide();
 
@@ -46,58 +45,7 @@ export default function App(props) {
     }
 
     loadResourcesAndDataAsync();
-  }, []);
-
-  registerForPushNotificationsAsync = async (user) => {
-    const { status: existingStatus } = await Permissions.getAsync(
-      Permissions.NOTIFICATIONS
-    );
-
-    let finalStatus = existingStatus;
-
-    // only ask if permissions have not already been determined, because
-    // iOS won't necessarily prompt the user a second time.
-    if (existingStatus !== 'granted') {
-      // Android remote notification permissions are granted during the app
-      // install, so this will only ask on iOS
-      const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
-      finalStatus = status;
-    }
-
-    // Stop here if the user did not grant permissions
-    if (finalStatus !== 'granted') {
-      return;
-    }
-    console.log(finalStatus)
-
-    console.log(user)
-
-    // Get the token that uniquely identifies this device
-    let token = await Notifications.getExpoPushTokenAsync();
-
-    var updates = {}
-    updates['/expoToken'] = token
-
-    fetch('10.5.116.110:3000/api/users/registerForPushNotifications/1', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        expoToken: updates,
-      }),
-    })
-    .then((response) => response.json())
-    .then((responseJson) => {
-        return responseJson.movies;
-    })
-    .catch((error) => {
-        console.error(error);
-    });
-
-    console.log(response)
-  }
+  }, []); 
 
   if (!isLoadingComplete && !props.skipLoadingScreen) {
     return null;
