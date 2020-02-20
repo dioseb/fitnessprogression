@@ -2,7 +2,8 @@ import { Notifications } from 'expo';
 import * as Permissions from 'expo-permissions';
 import { Component } from 'react';
 
-const PUSH_ENDPOINT = 'http://192.168.0.7:3000/api/notifications/registerForPushNotifications/1';
+//const PUSH_ENDPOINT = 'http://10.5.118.64:3000/api/notifications/registerForPushNotifications/1';
+const PUSH_ENDPOINT = 'http://192.168.0.0:3000/api/notifications/registerForPushNotifications/1';
 
 class NotificationsApi extends Component {
         registerForPushNotificationsAsync = async () => {
