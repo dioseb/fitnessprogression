@@ -30,7 +30,7 @@ export default class App extends React.Component {
   render() {
     // async function loadResourcesAndDataAsync() {
     //   try {
-         new NotificationsApi().registerForPushNotificationsAsync();
+         //new NotificationsApi().registerForPushNotificationsAsync();
 
     //     SplashScreen.preventAutoHide();
 
