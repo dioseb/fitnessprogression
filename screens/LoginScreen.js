@@ -1,10 +1,15 @@
 import * as React from 'react';
 import { StyleSheet, View, Button } from 'react-native';
 import * as Google from 'expo-google-app-auth';
+import { Notifications } from 'expo';
+import * as Permissions from 'expo-permissions';
 //import { GoogleSignIn } from 'expo';
 //import { googleConfig } from '../config/google_config';
-
 import firebase from 'firebase';
+
+const PUSH_ENDPOINT_CREATEUSER = 'http://192.168.0.7:3000/api/users';
+const PUSH_ENDPOINT_UPDATEUSER = 'http://192.168.0.7:3000/api/users/';
+//const PUSH_ENDPOINT_REGISTER_NOTIFICATIONS = 'http://192.168.0.7:3000/api/notifications/registerForPushNotifications/';
 
 class LoginScreen extends React.Component {
     isUserEqual = (googleUser, firebaseUser) => {
@@ -39,37 +44,101 @@ class LoginScreen extends React.Component {
                         googleUser.accessToken
                     );
 
-                    // Sign in with credential from the Google user.
-                    //-----------------------------------------------------
-                    // TODO
-                    // CALL API TO CREATE USER BASED ON GOOGLE INFORMATIONS
-                    //-----------------------------------------------------
+                    // Sign in with credential from the Google user.                    
+                    // CALL API TO CREATE USER BASED ON GOOGLE INFORMATIONS                   
                     firebase
                         .auth()
                         .signInWithCredential(credential)
-                        .then(function (result) {
-                            console.log('user signed in ');
+                        .then(async (result) => {
+                            console.log('user signed in');
                             if (result.additionalUserInfo.isNewUser) {
-                                firebase
-                                    .database()
-                                    .ref('/users/' + result.user.uid)
-                                    .set({
-                                        gmail: result.user.email,
-                                        profile_picture: result.additionalUserInfo.profile.picture,
-                                        first_name: result.additionalUserInfo.profile.given_name,
-                                        last_name: result.additionalUserInfo.profile.family_name,
-                                        created_at: Date.now()
+                                console.log('NEW USER');
+                                let token;
+                                //CHECK IF PERMISSION FOR NOTIFICATIONS IS GRANTED
+                                const { status: existingStatus } = await Permissions.getAsync(
+                                    Permissions.NOTIFICATIONS
+                                );
+                        
+                                let finalStatus = existingStatus;
+                        
+                                // only ask if permissions have not already been determined, because
+                                // iOS won't necessarily prompt the user a second time.
+                                if (existingStatus !== 'granted') {
+                                    // Android remote notification permissions are granted during the app
+                                    // install, so this will only ask on iOS
+                                    const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+                                    finalStatus = status;
+                                }
+                        
+                                // Stop here if the user did not grant permissions
+                                if (finalStatus !== 'granted') {
+                                    token = '';
+                                }
+                                else {
+                                    token = await Notifications.getExpoPushTokenAsync();
+                                }
+                                
+                                new Promise(async (resolve, reject) => {
+                                    console.log(Date.now());
+                                    console.log(`CREATE user with id : ${result.user.uid}`);
+                                    console.log(`${PUSH_ENDPOINT_CREATEUSER}`);
+                                    await fetch(`${PUSH_ENDPOINT_CREATEUSER}`, {
+                                        method: 'POST',
+                                        headers: {
+                                            Accept: 'application/json',
+                                            'Content-Type': 'application/json',
+                                        },
+                                        body: JSON.stringify({
+                                            id: result.user.uid,
+                                            last_name: result.additionalUserInfo.profile.given_name,
+                                            first_name: result.additionalUserInfo.profile.family_name,
+                                            createdAt: Date.now(),
+                                            expoToken: token,
+                                            email: result.user.email
+                                        }),
                                     })
-                                    .then(function (snapshot) {
-                                        // console.log('Snapshot', snapshot);
-                                    });
+                                    resolve(result);
+                                })
+                                .catch(async (error) => {
+                                    console.log('Request failed', error);
+                                })
+                                // new Promise(async (resolve, reject) => {
+                                //     console.log(`REGISTERNOTIFICATION for user : ${result.user.uid}`);
+                                //     console.log(`${PUSH_ENDPOINT_REGISTER_NOTIFICATIONS}${result.user.uid}`);
+                                //     await fetch(`${PUSH_ENDPOINT_REGISTER_NOTIFICATIONS}${result.user.uid}`, {
+                                //         method: 'POST',
+                                //         headers: {
+                                //             Accept: 'application/json',
+                                //             'Content-Type': 'application/json',
+                                //         },
+                                //         body: JSON.stringify({
+                                //             expoToken: token
+                                //         }),
+                                //     })
+                                //     resolve(result);
+                                // })
+                                // .catch(async (error) => {
+                                //     console.log('Request failed', error);
+                                // })
                             } else {
-                                firebase
-                                    .database()
-                                    .ref('/users/' + result.user.uid)
-                                    .update({
-                                        last_logged_in: Date.now()
-                                    });
+                                console.log(`UPDATE User with id ${result.user.uid}`);
+                                new Promise(async (resolve, reject) => {
+                                    console.log(`${PUSH_ENDPOINT_UPDATEUSER}${result.user.uid}`);
+                                    let res = await fetch(`${PUSH_ENDPOINT_UPDATEUSER}${result.user.uid}`, {
+                                        method: 'PUT',
+                                        headers: {
+                                            Accept: 'application/json',
+                                            'Content-Type': 'application/json',
+                                        },
+                                        body: JSON.stringify({
+                                            last_logged_in: Date.now()
+                                        }),
+                                    })
+                                    resolve(res);
+                                })
+                                .catch(async (error) => {
+                                    console.log('Request failed', error);
+                                })
                             }
                         })
                         .catch(function (error) {
@@ -82,7 +151,7 @@ class LoginScreen extends React.Component {
                             var credential = error.credential;
 
                             console.log(`ErrorCode : ${errorCode}, errorMessage : ${errorMessage},
-                  email : ${email}, credential : ${credential}`);
+                                email : ${email}, credential : ${credential}`);
                         });
                 } else {
                     console.log('User already signed-in Firebase.');
