@@ -10,9 +10,9 @@ class LoadingScreen extends React.Component {
         this.checkIfLoggedIn();
     }
 
-    checkIfLoggedIn = () => {
+    checkIfLoggedIn = async () => {
         firebase.auth().onAuthStateChanged(
-            function (user) {
+            async (user) => {
                 console.log('AUTH STATE CHANGED CALLED ')
                 if (user) {
                     console.log(`DashboardScreen navigation`);
@@ -22,7 +22,7 @@ class LoadingScreen extends React.Component {
                     console.log(`LoginScreen navigation`);
                     this.props.navigation.navigate('LoginScreen');
                 }
-            }.bind(this)
+            }
         );
     };
     

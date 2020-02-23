@@ -1,11 +1,6 @@
 import { Notifications } from 'expo';
 import * as Permissions from 'expo-permissions';
 import { Component } from 'react';
-import { resolveUri } from 'expo-asset/build/AssetSources';
-
-//const PUSH_ENDPOINT = 'http://10.5.118.32:3000/api/notifications/registerForPushNotifications/1';
-const PUSH_ENDPOINT_REGISTER_NOTIFICATIONS = 'http://192.168.0.7:3000/api/notifications/registerForPushNotifications/';
-const PUSH_ENDPOINT_GETUSER = 'http://192.168.0.7:3000/api/users/1';
 
 class NotificationsApi extends Component {
     registerForPushNotificationsAsync = async () => {
@@ -24,15 +19,14 @@ class NotificationsApi extends Component {
             finalStatus = status;
         }
 
+        let token;
         // Stop here if the user did not grant permissions
         if (finalStatus !== 'granted') {
-            return;
+            return token = '';
         }
-        // console.log(finalStatus)
-
-        // // Get the token that uniquely identifies this device
-        // let token = await Notifications.getExpoPushTokenAsync();
-        // console.log(token)
+        else {
+            return token = await Notifications.getExpoPushTokenAsync();
+        }
 
         // try {
         //     console.log(PUSH_ENDPOINT_GETUSER);

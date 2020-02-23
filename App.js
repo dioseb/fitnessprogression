@@ -17,7 +17,7 @@ firebase.initializeApp(firebaseConfig);
 //import BottomTabNavigator from './navigation/BottomTabNavigator';
 import useLinking from './navigation/useLinking';
 
-import NotificationsApi from './api/notifications/Notifications_Api';
+import NotificationsApi from './api/notifications/notifications_api';
 
 //const Stack = createStackNavigator();
 
@@ -30,7 +30,7 @@ export default class App extends React.Component {
   render() {
     // async function loadResourcesAndDataAsync() {
     //   try {
-    new NotificationsApi().registerForPushNotificationsAsync();
+    //new NotificationsApi().registerForPushNotificationsAsync();
 
     //     SplashScreen.preventAutoHide();
 
