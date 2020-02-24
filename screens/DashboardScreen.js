@@ -1,23 +1,16 @@
 import * as React from 'react';
 import { StyleSheet, View, Button, Text } from 'react-native';
-import firebase from 'firebase';
 
-class DashboardScreen extends React.Component {
-    render() {
-        return (
-            <View style={styles.container}>
-                <Text>DashboardScreen</Text>
-                <Button title="Sign out" onPress={() => firebase.auth().signOut()} />
-            </View>
-        );
-    }
-}
+import SignOut from '../firebase/utils/signOut';
+
+const DashboardScreen = () => (
+    <View style={styles.container}>
+        <Text>DashboardScreen</Text>
+        <Button onPress={SignOut} title="Sign Out" />
+    </View>
+);
 
 export default DashboardScreen;
-
-DashboardScreen.navigationOptions = {
-    header: null,
-};
 
 const styles = StyleSheet.create({
     container: {

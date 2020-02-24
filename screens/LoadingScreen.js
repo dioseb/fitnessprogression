@@ -1,45 +1,29 @@
 import * as React from 'react';
-import { StyleSheet, View, Text, ActivityIndicator } from 'react-native';
-import firebase from 'firebase';
+import { StyleSheet, View, ActivityIndicator } from 'react-native';
 
-//const PUSH_ENDPOINT = 'http://10.5.118.64:3000/api/users/userLoggedIn/id';
-const PUSH_ENDPOINT = 'http://192.168.0.7:3000/api/users/userLoggedIn/id';
+import API from '../firebase/utils/firebase';
 
-class LoadingScreen extends React.Component {
-    componentDidMount() {
-        this.checkIfLoggedIn();
-    }
-
-    checkIfLoggedIn = async () => {
-        firebase.auth().onAuthStateChanged(
-            async (user) => {
-                console.log('AUTH STATE CHANGED CALLED ')
-                if (user) {
-                    console.log(`DashboardScreen navigation`);
-                    this.props.navigation.navigate('DashboardScreen');
-                }
-                else {
-                    console.log(`LoginScreen navigation`);
-                    this.props.navigation.navigate('LoginScreen');
-                }
-            }
+const LoadingScreen = ({ navigation }) => {
+    const isUserLoggedIn = React.useCallback(() => {
+        API.auth().onAuthStateChanged(user =>
+            user
+                ? navigation.navigate('DashboardScreen')
+                : navigation.navigate('LoginScreen')
         );
-    };
-    
-    render() {
-        return (
-            <View style={styles.container} >
-                <ActivityIndicator size="large" />
-            </View>
-        );
-    }
-}
+    }, [navigation]);
+
+    React.useEffect(() => {
+        isUserLoggedIn();
+    }, [isUserLoggedIn]);
+
+    return (
+        <View style={styles.container}>
+            <ActivityIndicator size="large" />
+        </View>
+    );
+};
 
 export default LoadingScreen;
-
-LoadingScreen.navigationOptions = {
-    header: null,
-};
 
 const styles = StyleSheet.create({
     container: {
