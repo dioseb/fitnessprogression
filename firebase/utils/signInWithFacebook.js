@@ -9,13 +9,12 @@ const signInWithFacebookAsync = async () => {
         await Facebook.initializeAsync(facebookAppId, 'FitnessProgression')
             .then(async () => {
                 await Facebook.logInWithReadPermissionsAsync({ permissions: ['public_profile'] })
-                    .then(async (type, token) => {
-                        if (type === 'success') {
-                            console.log('Success :', 'logInWithReadPermissionsAsync SUCCESS');
-                            onSignInFacebook(token);
-                            Alert.alert('Logged in!', `Hi ${(await response.json()).name}!`);
+                    .then(async (res) => {
+                        if (res.type === 'success') {
+                            onSignInFacebook(res.token);
+                            alert('Logged in!', `Hi ${(await res.json()).name}!`);
                         } else {
-                            console.log(`Error Response : ${type}, Token : ${token}`);
+                            console.log(`Error Response : type : ${res.type}, Token : ${res.token}`);
                         }
                     })
                     .catch(e => console.log(e));
@@ -24,29 +23,6 @@ const signInWithFacebookAsync = async () => {
     } catch ({ message }) {
         alert(`Facebook Login Error: ${message}`);
     }
-    //   try {
-    //     await Facebook.initializeAsync(facebookAppId);
-    //     const { 
-    //         type, 
-    //         token,
-    //         expires,
-    //         permissions,
-    //         declinedPermissions
-    //     } = await Facebook.logInWithReadPermissionsAsync(
-    //       facebookAppId,
-    //       {
-    //         permissions: ['public_profile', 'email'],
-    //       }
-    //     );
-
-    //     if (type === 'success') {
-    //       onSignInFacebook(token);
-    //     } else {
-    //       console.log('Error Response');
-    //     }
-    //   } catch ({ message }) {
-    //     alert(`Facebook Login Error: ${message}`);
-    //   }
 };
 
 export default signInWithFacebookAsync;

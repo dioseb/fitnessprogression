@@ -6,20 +6,20 @@ import NotificationsApi from '../../api/notifications/notificationsApi';
 //const USER_API_ENDPOINT = 'http://10.5.118.54:3000/api/users';
 const USER_API_ENDPOINT = 'http://192.168.0.11:3000/api/users';
 
-const onSignInFacebook = token => {
-    console.log('Facebook Token :', token);
-    if (token) {
+const onSignInFacebook = fbToken => {
+    console.log('Facebook Token :', fbToken);
+    if (fbToken) {
         const unsubscribe = API.auth().onAuthStateChanged(firebaseUser => {
             unsubscribe();
-            if (!isUserEqualFacebook(token, firebaseUser)) {
+            if (!isUserEqualFacebook(fbToken, firebaseUser)) {
                 // Build Firebase credential with the Facebook token.
-                const credential = API.auth.FacebookAuthProvider.credential(token);
-
+                const credential = API.auth.FacebookAuthProvider.credential(fbToken);
+                console.log(`Firebase User Credentials : ${credential}`);
                 // Sign in with credential from the Google user.                    
                 // CALL API TO CREATE USER BASED ON GOOGLE INFORMATIONS   
                 API.auth().signInWithCredential(credential)
                     .then(async (result) => {
-                        console.log('user signed in');
+                        console.log(`Firebase User : ${result.email}`);
                         if (result.additionalUserInfo.isNewUser) {
                             console.log('NEW USER');
 
@@ -28,6 +28,7 @@ const onSignInFacebook = token => {
 
                             new Promise(async (resolve, reject) => {
                                 console.log(`CREATE user with id : ${result.user.uid}`);
+                                console.log(`CREATE user with email : ${result.additionalUserInfo.profile.email}`);
                                 console.log(`${USER_API_ENDPOINT}/${result.user.uid}`);
                                 await fetch(`${USER_API_ENDPOINT}`, {
                                     method: 'POST',
@@ -41,7 +42,7 @@ const onSignInFacebook = token => {
                                         first_name: result.additionalUserInfo.profile.first_name,
                                         createdAt: new Date(),
                                         expoToken: token,
-                                        email: result.user.email,
+                                        email: result.additionalUserInfo.profile.email,
                                         last_logged_in: new Date()
                                     }),
                                 })
