@@ -1,6 +1,7 @@
 import { Component } from 'react';
 
-const PUSH_ENDPOINT_GETUSER = 'http://10.5.118.54:3000/api/users/';
+//const PUSH_ENDPOINT_GETUSER = 'http://10.5.118.54:3000/api/users/';
+const PUSH_ENDPOINT_GETUSER = 'http://192.168.0.11:3000/api/users/';
 
 class UsersApi extends Component {
     getById = async (id) => {

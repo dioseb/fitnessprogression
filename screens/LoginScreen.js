@@ -2,12 +2,12 @@ import React from 'react';
 import { StyleSheet, View, Button } from 'react-native';
 
 import signInWithGoogleAsync from '../firebase/utils/signInWithGoogle';
-//import signInWithFacebookAsync from '../firebase/utils/signInWithFacebook';
+import signInWithFacebookAsync from '../firebase/utils/signInWithFacebook';
 
 const LoginScreen = () => (
   <View style={styles.container}>
     <Button title="Sign In With Google" onPress={signInWithGoogleAsync} />
-    {/* <Button title="Sign In With Facebook" onPress={signInWithFacebookAsync} /> */}
+    <Button title="Sign In With Facebook" onPress={signInWithFacebookAsync} />
   </View>
 );
 export default LoginScreen;

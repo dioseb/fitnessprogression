@@ -1,27 +1,22 @@
 import API from './firebase';
 
-import isUserEqualGoogle from './isUserEqualGoogle';
+import isUserEqualFacebook from './isUserEqualFacebook';
 
 import NotificationsApi from '../../api/notifications/notificationsApi';
 //const USER_API_ENDPOINT = 'http://10.5.118.54:3000/api/users';
 const USER_API_ENDPOINT = 'http://192.168.0.11:3000/api/users';
 
-const onSignInGoogle = async googleUser => {
-    console.log('Google Auth Response :', googleUser);
-    // We need to register an Observer on Firebase Auth to make sure auth is initialized.
-    var unsubscribe = API.auth().onAuthStateChanged(
-        async (user, next) => {
+const onSignInFacebook = token => {
+    console.log('Facebook Token :', token);
+    if (token) {
+        const unsubscribe = API.auth().onAuthStateChanged(firebaseUser => {
             unsubscribe();
-            // Check if we are already signed-in Firebase with the correct user.
-            if (!isUserEqualGoogle(googleUser, user)) {
-                // Build Firebase credential with the Google ID token.
-                var credential = API.auth.GoogleAuthProvider.credential(
-                    googleUser.idToken,
-                    googleUser.accessToken
-                );
+            if (!isUserEqualFacebook(token, firebaseUser)) {
+                // Build Firebase credential with the Facebook token.
+                const credential = API.auth.FacebookAuthProvider.credential(token);
 
                 // Sign in with credential from the Google user.                    
-                // CALL API TO CREATE USER BASED ON GOOGLE INFORMATIONS                   
+                // CALL API TO CREATE USER BASED ON GOOGLE INFORMATIONS   
                 API.auth().signInWithCredential(credential)
                     .then(async (result) => {
                         console.log('user signed in');
@@ -42,8 +37,8 @@ const onSignInGoogle = async googleUser => {
                                     },
                                     body: JSON.stringify({
                                         id: result.user.uid,
-                                        last_name: result.additionalUserInfo.profile.given_name,
-                                        first_name: result.additionalUserInfo.profile.family_name,
+                                        last_name: result.additionalUserInfo.profile.last_name,
+                                        first_name: result.additionalUserInfo.profile.first_name,
                                         createdAt: new Date(),
                                         expoToken: token,
                                         email: result.user.email,
@@ -95,14 +90,16 @@ const onSignInGoogle = async googleUser => {
                         var credential = error.credential;
 
                         console.log(`ErrorCode : ${errorCode}, errorMessage : ${errorMessage},
-                            email : ${email}, credential : ${credential}`);
+                email : ${email}, credential : ${credential}`);
                     });
             } else {
                 console.log('User already signed-in Firebase.');
             }
-            next();
-        }
-    );
+        });
+    } else {
+        console.log('Facebook Token :', token);
+        API.auth().signOut();
+    }
 };
 
-export default onSignInGoogle;
+export default onSignInFacebook;
