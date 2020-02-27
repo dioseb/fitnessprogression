@@ -14,15 +14,12 @@ const onSignInFacebook = fbToken => {
             if (!isUserEqualFacebook(fbToken, firebaseUser)) {
                 // Build Firebase credential with the Facebook token.
                 const credential = API.auth.FacebookAuthProvider.credential(fbToken);
-                console.log(`Firebase User Credentials : ${credential}`);
-                // Sign in with credential from the Google user.                    
-                // CALL API TO CREATE USER BASED ON GOOGLE INFORMATIONS   
+                // Sign in with credential from the Facebook user.                    
+                // CALL API TO CREATE USER BASED ON Facebook INFORMATIONS   
                 API.auth().signInWithCredential(credential)
                     .then(async (result) => {
-                        console.log(`Firebase User : ${result.email}`);
                         if (result.additionalUserInfo.isNewUser) {
                             console.log('NEW USER');
-
                             let token = await new NotificationsApi().registerForPushNotificationsAsync();
                             console.log(`token : ${token}`);
 

@@ -42,8 +42,8 @@ const onSignInGoogle = async googleUser => {
                                     },
                                     body: JSON.stringify({
                                         id: result.user.uid,
-                                        last_name: result.additionalUserInfo.profile.given_name,
-                                        first_name: result.additionalUserInfo.profile.family_name,
+                                        last_name: result.additionalUserInfo.profile.family_name,
+                                        first_name: result.additionalUserInfo.profile.given_name,
                                         createdAt: new Date(),
                                         expoToken: token,
                                         email: result.user.email,
