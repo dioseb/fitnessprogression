@@ -2,7 +2,7 @@ import * as Google from 'expo-google-app-auth';
 //import * as Google from 'expo-google-sign-in';
 
 import onSignInGoogle from './googleSignInFirebase';
-import { iosClientId } from '../config/google_config';
+import { iosClientId, androidClientId } from '../config/google_config';
 
 //import { GoogleSignIn } from 'expo';
 
@@ -11,6 +11,7 @@ const signInWithGoogleAsync = async () => {
     try {
         const result = await Google.logInAsync({
             iosClientId: iosClientId,
+            androidClientId: androidClientId,
             scopes: ['profile', 'email']
         });
         //PRODUCTION
