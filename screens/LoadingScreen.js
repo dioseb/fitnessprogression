@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { StyleSheet, View, ActivityIndicator, ImageBackground } from 'react-native';
 
-import bground from '../assets/images/background-1242x2688.png';
+import bground from '../assets/images/background.png';
 
 import API from '../firebase/utils/firebase';
 
