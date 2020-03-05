@@ -58,7 +58,7 @@ const MyAppContainer = createAppContainer(
       DashboardScreen,
     },
     {
-      initialRouteName: 'LoginAnimatedScreen',
+      initialRouteName: 'LoadingScreen',
     }
   )
 );

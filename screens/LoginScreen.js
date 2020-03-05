@@ -6,14 +6,15 @@ import signInWithGoogleAsync from '../firebase/utils/signInWithGoogle';
 import signInWithFacebookAsync from '../firebase/utils/signInWithFacebook';
 
 import bground from '../assets/images/background.png';
-//import logo from '../assets/images/logo.png';
+import logo from '../assets/images/logo.png';
 
 const { width: WIDTH } = Dimensions.get('window');
 
 const LoginScreen = () => (
+  
   <ImageBackground source={bground} style={styles.backgroundContainer}>
     <View style={styles.logoContainer}>
-      {/* <Image source={logo} style={styles.logo}></Image> */}
+      <Image source={logo} style={styles.logo}></Image>
       <Text style={styles.logoText}>Fitness Progression</Text>
     </View>
 

@@ -5,6 +5,10 @@ import { SocialIcon } from 'react-native-elements'
 import Svg, { Image, Circle, ClipPath } from 'react-native-svg';
 import Animated, { Easing } from 'react-native-reanimated';
 import { TapGestureHandler, State } from 'react-native-gesture-handler';
+
+import signInWithGoogleAsync from '../firebase/utils/signInWithGoogle';
+import signInWithFacebookAsync from '../firebase/utils/signInWithFacebook';
+
 const { width, height } = Dimensions.get('window');
 
 const {
@@ -170,6 +174,7 @@ class LoginAnimatedScreen extends Component {
                 title='Sign in with Facebook'
                 button
                 type='facebook'
+                onPress={signInWithFacebookAsync}
               />
           </Animated.View>
           <Animated.View
@@ -182,6 +187,7 @@ class LoginAnimatedScreen extends Component {
                 title='Sign in with Google'
                 button
                 type='google'
+                onPress={signInWithGoogleAsync}
               />
           </Animated.View>
           <Animated.View

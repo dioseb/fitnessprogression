@@ -3,14 +3,14 @@ import API from './firebase';
 import isUserEqualGoogle from './isUserEqualGoogle';
 
 import NotificationsApi from '../../api/notifications/notificationsApi';
-//const USER_API_ENDPOINT = 'http://10.5.118.54:3000/api/users';
-const USER_API_ENDPOINT = 'http://192.168.0.11:3000/api/users';
+const USER_API_ENDPOINT = 'http://10.5.118.95:3000/api/users';
+//const USER_API_ENDPOINT = 'http://192.168.0.11:3000/api/users';
 
 const onSignInGoogle = async googleUser => {
     console.log('Google Auth Response :', googleUser);
     // We need to register an Observer on Firebase Auth to make sure auth is initialized.
     var unsubscribe = API.auth().onAuthStateChanged(
-        async (user, next) => {
+        async (user) => {
             unsubscribe();
             // Check if we are already signed-in Firebase with the correct user.
             if (!isUserEqualGoogle(googleUser, user)) {
@@ -22,7 +22,7 @@ const onSignInGoogle = async googleUser => {
 
                 // Sign in with credential from the Google user.                    
                 // CALL API TO CREATE USER BASED ON GOOGLE INFORMATIONS                   
-                API.auth().signInWithCredential(credential)
+                await API.auth().signInWithCredential(credential)
                     .then(async (result) => {
                         console.log('user signed in');
                         if (result.additionalUserInfo.isNewUser) {
@@ -59,7 +59,7 @@ const onSignInGoogle = async googleUser => {
                             console.log(`GET User by id ${result.user.uid}`);
                             await fetch(`${USER_API_ENDPOINT}/${result.user.uid}`)
                                 .then(async response => response.json())
-                                .then(async user => new Promise(async (resolve, reject) => {
+                                .then(async user => {
                                     console.log(`UPDATE User with id ${user.id}`);
                                     console.log(`${USER_API_ENDPOINT}/${user.id}`);
                                     await fetch(`${USER_API_ENDPOINT}/${user.id}`, {
@@ -78,10 +78,6 @@ const onSignInGoogle = async googleUser => {
                                             last_logged_in: new Date()
                                         }),
                                     })
-                                    resolve(result);
-                                }))
-                                .catch(async (error) => {
-                                    console.log('Request failed', error);
                                 })
                         }
                     })
@@ -100,7 +96,6 @@ const onSignInGoogle = async googleUser => {
             } else {
                 console.log('User already signed-in Firebase.');
             }
-            next();
         }
     );
 };
