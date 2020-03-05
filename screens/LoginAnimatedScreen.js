@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Dimensions, TextInput, KeyboardAvoidingView, Button } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, TextInput, KeyboardAvoidingView, Button, TouchableOpacity } from 'react-native';
 
 import { SocialIcon } from 'react-native-elements'
 import Svg, { Image, Circle, ClipPath } from 'react-native-svg';
@@ -156,12 +156,15 @@ class LoginAnimatedScreen extends Component {
           <TapGestureHandler onHandlerStateChange={this.onStateChange}>
             <Animated.View
               style={{
-                ...styles.button,
                 opacity: this.buttonOpacity,
                 transform: [{ translateY: this.buttonY }]
               }}
             >
-              <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Sign in</Text>
+              <SocialIcon
+              title='SIGN UP'
+              light
+              button
+            />
             </Animated.View>
           </TapGestureHandler>
           <Animated.View
@@ -171,11 +174,11 @@ class LoginAnimatedScreen extends Component {
             }}
           >
             <SocialIcon
-                title='Sign in with Facebook'
-                button
-                type='facebook'
-                onPress={signInWithFacebookAsync}
-              />
+              title='Sign in with Facebook'
+              button
+              type='facebook'
+              onPress={signInWithFacebookAsync}
+            />
           </Animated.View>
           <Animated.View
             style={{
@@ -184,28 +187,35 @@ class LoginAnimatedScreen extends Component {
             }}
           >
             <SocialIcon
-                title='Sign in with Google'
-                button
-                type='google'
-                onPress={signInWithGoogleAsync}
-              />
+              title='Sign in with Google'
+              button
+              type='google'
+              onPress={signInWithGoogleAsync}
+            />
           </Animated.View>
-          <Animated.View
-            style={{
-              ...styles.fixToText,
-              opacity: this.buttonOpacity,
-              transform: [{ translateY: this.buttonY }]
-            }}
-          >
-            <Text style={{ fontSize: 14, alignSelf: 'center' ,color: 'white' }}>You already have an account ? </Text>
-            <Button style={{
-              ...styles.buttonConnection,
-              opacity: this.buttonOpacity,
-              transform: [{ translateY: this.buttonY }]
-            }}
-            title="Connection"
-          />
-          </Animated.View>
+          <TapGestureHandler onHandlerStateChange={this.onStateChange}>
+            <Animated.View
+              style={{
+                ...styles.fixToText,
+                opacity: this.buttonOpacity,
+                transform: [{ translateY: this.buttonY }]
+              }}
+            >
+              <Text style={{ fontSize: 14, alignSelf: 'center', color: 'white' }}>Already have an account ? </Text>
+              <TouchableOpacity
+                style={styles.text}
+                onPress={this.onPress}
+              >
+                <Text
+                  onPress={() => console.log('1st')}
+                  style={{
+                    fontSize: 14,
+                    alignSelf: 'center',
+                    color: 'rgb(33, 150, 243)'
+                  }}>SIGN IN</Text>
+              </TouchableOpacity>
+            </Animated.View>
+          </TapGestureHandler>
           <Animated.View style={{
             zIndex: this.textInputZindex,
             opacity: this.textInputOpacity,
@@ -236,8 +246,12 @@ class LoginAnimatedScreen extends Component {
               placeholderTextColor="black"
             />
 
-            <Animated.View style={styles.button}>
-              <Text style={{ fontSize: 20, fontWeight: 'bold' }}>SIGN IN</Text>
+            <Animated.View>
+            <SocialIcon
+                title='SIGN UP'
+                button
+                light
+              />
             </Animated.View>
           </Animated.View>
         </View>
@@ -248,6 +262,14 @@ class LoginAnimatedScreen extends Component {
 export default LoginAnimatedScreen;
 
 const styles = StyleSheet.create({
+  fixToText: {
+    flexDirection: 'row',
+    justifyContent: 'center'
+  },
+  text: {
+    alignItems: 'center',
+    backgroundColor: 'transparent',
+  },
   container: {
     flex: 1,
     alignItems: 'center',
@@ -256,23 +278,6 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: 'white',
     height: 70,
-    marginHorizontal: 20,
-    borderRadius: 35,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginVertical: 5,
-    shadowOffset: { width: 2, height: 2 },
-    shadowColor: 'black',
-    shadowOpacity: 0.2,
-    elevation: 2
-  },
-  fixToText: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  buttonConnection: {
-    backgroundColor: 'transparent',
-    height: 30,
     marginHorizontal: 20,
     borderRadius: 35,
     alignItems: 'center',

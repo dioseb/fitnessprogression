@@ -3,8 +3,8 @@ import API from './firebase';
 import isUserEqualGoogle from './isUserEqualGoogle';
 
 import NotificationsApi from '../../api/notifications/notificationsApi';
-const USER_API_ENDPOINT = 'http://10.5.118.95:3000/api/users';
-//const USER_API_ENDPOINT = 'http://192.168.0.11:3000/api/users';
+
+import { USER_API_ENDPOINT } from '../../api/config/config';
 
 const onSignInGoogle = async googleUser => {
     console.log('Google Auth Response :', googleUser);
