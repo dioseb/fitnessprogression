@@ -247,7 +247,7 @@ class LoginAnimatedScreen extends Component {
 
             <Animated.View>
             <SocialIcon
-                title='SIGN UP'
+                title='Sign In'
                 button
                 light
               />
