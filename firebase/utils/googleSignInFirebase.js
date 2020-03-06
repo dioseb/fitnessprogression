@@ -22,7 +22,7 @@ const onSignInGoogle = async googleUser => {
 
                 // Sign in with credential from the Google user.                    
                 // CALL API TO CREATE USER BASED ON GOOGLE INFORMATIONS                   
-                await API.auth().signInWithCredential(credential)
+                await API.auth().signInAndRetrieveDataWithCredential(credential)
                     .then(async (result) => {
                         console.log('user signed in');
                         if (result.additionalUserInfo.isNewUser) {

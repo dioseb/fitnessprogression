@@ -153,7 +153,6 @@ class LoginAnimatedScreen extends Component {
           </Svg>
         </Animated.View>
         <View style={{ height: height / 2.5, justifyContent: 'center' }}>
-          <TapGestureHandler onHandlerStateChange={this.onStateChange}>
             <Animated.View
               style={{
                 opacity: this.buttonOpacity,
@@ -161,12 +160,12 @@ class LoginAnimatedScreen extends Component {
               }}
             >
               <SocialIcon
-              title='SIGN UP'
+              title='Sign Up'
               light
               button
+              onPress={() => this.props.navigation.navigate('SignUpScreen')}
             />
             </Animated.View>
-          </TapGestureHandler>
           <Animated.View
             style={{
               opacity: this.buttonOpacity,
@@ -212,7 +211,7 @@ class LoginAnimatedScreen extends Component {
                     fontSize: 14,
                     alignSelf: 'center',
                     color: 'rgb(33, 150, 243)'
-                  }}>SIGN IN</Text>
+                  }}>Sign In</Text>
               </TouchableOpacity>
             </Animated.View>
           </TapGestureHandler>

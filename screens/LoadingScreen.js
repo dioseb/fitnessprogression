@@ -17,8 +17,7 @@ const LoadingScreen = ({ navigation }) => {
 
     React.useEffect(() => {
         isUserLoggedIn();
-    }, [isUserLoggedIn]);
-   
+    }, [isUserLoggedIn]);   
   
     return (
         <ImageBackground source={bground} style={styles.backgroundContainer}>

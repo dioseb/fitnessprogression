@@ -1,12 +1,11 @@
 import * as React from 'react';
-import { StyleSheet } from 'react-native';
 
 import { Asset } from 'expo-asset';
 import { AppLoading } from 'expo';
 
 import { createSwitchNavigator, createAppContainer } from 'react-navigation';
 
-import { DashboardScreen, LoadingScreen, LoginScreen, LoginAnimatedScreen } from './screens';
+import { DashboardScreen, LoadingScreen, LoginScreen, LoginAnimatedScreen, SignUpScreen } from './screens';
 
 import API from './firebase/utils/firebase';
 import { firebaseConfig } from './firebase/config/firebase_config';
@@ -56,6 +55,7 @@ const MyAppContainer = createAppContainer(
       LoginScreen,
       LoginAnimatedScreen,
       DashboardScreen,
+      SignUpScreen
     },
     {
       initialRouteName: 'LoadingScreen',
