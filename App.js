@@ -44,7 +44,7 @@ export default class App extends React.Component {
         />
       );
     }
-    return <NavigationTree/>
+    return <NavigationTree headerMode="none"/>
   }
 }
 
