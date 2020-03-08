@@ -56,7 +56,8 @@ const onSignInGoogle = async googleUser => {
                                     console.log('Request failed', error);
                                 })
                         } else {
-                            console.log(`GET User by id ${result.user.uid}`);
+                            console.log(`GET User by id : ${result.user.uid}`);
+                            console.log(`URL : ${USER_API_ENDPOINT}`);
                             await fetch(`${USER_API_ENDPOINT}/${result.user.uid}`)
                                 .then(async response => response.json())
                                 .then(async user => {

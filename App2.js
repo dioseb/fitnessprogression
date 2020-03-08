@@ -7,8 +7,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createSwitchNavigator, createAppContainer } from 'react-navigation';
 
-//import BottomTabNavigator from './navigation/BottomTabNavigator';
-import useLinking from './navigation/useLinking';
+//import BottomTabNavigator from './navigations/BottomTabNavigator';
+import useLinking from './navigations/useLinking';
 
 import { DashboardScreen, LoadingScreen, LoginAnimatedScreen, SignUpScreen } from './screens';
 
@@ -33,7 +33,8 @@ function Auth() {
     );
 }
 
-const Root = createAppContainer(createSwitchNavigator(
+const Root = createAppContainer(
+    createSwitchNavigator(
     {
       AuthLoading: LoadingScreen,
       App: DashboardScreen,

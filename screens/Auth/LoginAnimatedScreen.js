@@ -6,8 +6,8 @@ import Svg, { Image, Circle, ClipPath } from 'react-native-svg';
 import Animated, { Easing } from 'react-native-reanimated';
 import { TapGestureHandler, State } from 'react-native-gesture-handler';
 
-import signInWithGoogleAsync from '../firebase/utils/signInWithGoogle';
-import signInWithFacebookAsync from '../firebase/utils/signInWithFacebook';
+import signInWithGoogleAsync from '../../firebase/utils/signInWithGoogle';
+import signInWithFacebookAsync from '../../firebase/utils/signInWithFacebook';
 
 const { width, height } = Dimensions.get('window');
 
@@ -144,7 +144,7 @@ class LoginAnimatedScreen extends Component {
               <Circle r={height + 50} cx={width / 2} />
             </ClipPath>
             <Image
-              href={require('../assets/images/background.png')}
+              href={require('../../assets/images/background.png')}
               height={height + 50}
               width={width}
               preserveAspectRatio="xMidYMid slice"
@@ -163,7 +163,7 @@ class LoginAnimatedScreen extends Component {
               title='Sign Up'
               light
               button
-              onPress={() => this.props.navigation.navigate('SignUpScreen')}
+              onPress={() => this.props.navigation.navigate('SignUp')}
             />
             </Animated.View>
           <Animated.View

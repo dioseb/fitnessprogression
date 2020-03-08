@@ -2,11 +2,11 @@ import React from 'react';
 import { StyleSheet, View, Button, Image, ImageBackground, Text, Dimensions, TextInput } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-import signInWithGoogleAsync from '../firebase/utils/signInWithGoogle';
-import signInWithFacebookAsync from '../firebase/utils/signInWithFacebook';
+import signInWithGoogleAsync from '../../firebase/utils/signInWithGoogle';
+import signInWithFacebookAsync from '../../firebase/utils/signInWithFacebook';
 
-import bground from '../assets/images/background.png';
-import logo from '../assets/images/logo.png';
+import bground from '../../assets/images/background.png';
+import logo from '../../assets/images/logo.png';
 
 const { width: WIDTH } = Dimensions.get('window');
 
