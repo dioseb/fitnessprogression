@@ -3,8 +3,6 @@ import * as React from 'react';
 import { Asset } from 'expo-asset';
 import { AppLoading } from 'expo';
 
-//import { createSwitchNavigator, createAppContainer } from 'react-navigation';
-
 import NavigationTree from './navigations/NavigationRoot_v5';
 
 import API from './firebase/utils/firebase';
@@ -47,18 +45,3 @@ export default class App extends React.Component {
     return <NavigationTree headerMode="none"/>
   }
 }
-
-// const MyAppContainer = createAppContainer(
-//   createSwitchNavigator(
-//     {
-//       LoadingScreen,
-//       LoginScreen,
-//       LoginAnimatedScreen,
-//       DashboardScreen,
-//       SignUpScreen
-//     },
-//     {
-//       initialRouteName: 'LoadingScreen',
-//     }
-//   )
-// );

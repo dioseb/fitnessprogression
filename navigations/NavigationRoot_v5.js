@@ -1,8 +1,8 @@
 import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { MaterialCommunityIcons } from 'react-native-vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 
 import Dashboard from '../screens/Home/DashboardScreen';
@@ -50,30 +50,103 @@ function DashboardTabNavigator() {
       tabBarOptions={{
         activeTintColor: 'tomato',
         inactiveTintColor: 'gray',
-      }}
-    >
+      }}>
       <Tab.Screen
         name="Dashboard"
-        component={Dashboard}
+        component={MyDashboardStack}
       />
       <Tab.Screen
         name="Settings"
-        component={Settings}
+        component={MySettingsStack}
       />
       <Tab.Screen
         name="Profile"
-        component={Profile}
+        component={MyProfileStack}
       />
     </Tab.Navigator>
   );
 };
+
+const Drawer = createDrawerNavigator();
+
+function DashboardDrawerNavigator() {
+  return (
+    <Drawer.Navigator
+      initialRouteName='Dashboard'
+      screenOptions={({ route }) => ({
+        drawerIcon: ({ focused, color, size }) => {
+          let iconName;
+
+          if (route.name === 'Dashboard') {
+            iconName = focused ? 'ios-desktop' : 'ios-desktop';
+          } else if (route.name === 'Settings') {
+            iconName = focused ? 'ios-settings' : 'ios-settings';
+          }
+          else if (route.name === 'Profile') {
+            iconName = focused ? 'ios-person' : 'ios-person';
+          }
+
+          // You can return any component that you like here!
+          return <Ionicons name={iconName} size={size} color={color} />;
+        }
+      })}>
+      <Drawer.Screen
+        name="Dashboard"
+        component={MyDashboardStack}
+      />
+      <Drawer.Screen
+        name="Settings"
+        component={MySettingsStack}
+      />
+      <Drawer.Screen
+        name="Profile"
+        component={MyProfileStack}
+      />
+    </Drawer.Navigator>
+  );
+};
+
+function MyHomeStack() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="Dashboard" component={Dashboard} />
+      <Stack.Screen name="Settings" component={Settings} />
+      <Stack.Screen name="Profile" component={Profile} />
+    </Stack.Navigator>
+  );
+}
+
+function MyDashboardStack() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="Dashboard" component={Dashboard} />
+    </Stack.Navigator>
+  );
+}
+
+function MySettingsStack() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="Settings" component={Settings} />
+    </Stack.Navigator>
+  );
+}
+
+function MyProfileStack() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="Profile" component={Profile} />
+    </Stack.Navigator>
+  );
+}
 
 export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName='Auth' headerMode="none">
         <Stack.Screen name="Auth" component={AuthStack} />
-        <Stack.Screen name="Dashboard" component={DashboardTabNavigator}/>
+        <Stack.Screen name="Dashboard" component={DashboardDrawerNavigator} />
+        {/* <Stack.Screen name="Dashboard" component={DashboardTabNavigator}/> */}
       </Stack.Navigator>
     </NavigationContainer>
   );
