@@ -5,7 +5,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from '@expo/vector-icons';
 
-import CustomDrawerContentComponent from '../components/CustomDrawerContentComponent';
+import Sidebar from '../components/CustomDrawerContentComponent';
 import Header from '../components/Header';
 
 import Dashboard from '../screens/Home/DashboardScreen';
@@ -77,7 +77,7 @@ function DashboardDrawerNavigator() {
     <Drawer.Navigator
       initialRouteName='Dashboard'
       drawerType='slide'
-      drawerContent= { props => <CustomDrawerContentComponent {...props}/> }
+      drawerContent= { props => <Sidebar {...props}/> }
       screenOptions={({ route }) => ({
         drawerIcon: ({ focused, color, size }) => {
           let iconName;
@@ -144,7 +144,15 @@ function MyDashboardStack() {
 function MySettingsStack() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Settings" component={Settings} />
+      <Stack.Screen 
+      name="Settings" 
+      component={Settings}
+      options={
+        ({ navigation }) => {
+        return {
+          headerLeft: () => <Header navigation={navigation} />
+        }
+      }} />
     </Stack.Navigator>
   );
 }
@@ -152,7 +160,15 @@ function MySettingsStack() {
 function MyProfileStack() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Profile" component={Profile} />
+      <Stack.Screen 
+      name="Profile" 
+      component={Profile}
+      options={
+        ({ navigation }) => {
+        return {
+          headerLeft: () => <Header navigation={navigation} />
+        }
+      }} />
     </Stack.Navigator>
   );
 }
@@ -160,7 +176,8 @@ function MyProfileStack() {
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName='Auth' headerMode="none" screenOptions={{gestureEnabled: false}}>
+      <Stack.Navigator initialRouteName='Auth' headerMode="none" screenOptions={{gestureEnabled: false
+      ,headerTitleAlign: 'center'}}>
         <Stack.Screen name="Auth" component={AuthStack} />
         <Stack.Screen name="Dashboard" component={DashboardDrawerNavigator} />
         {/* <Stack.Screen name="Dashboard" component={DashboardTabNavigator}/> */}

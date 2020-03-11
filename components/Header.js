@@ -16,13 +16,21 @@ export default function Header({ title, navigation }) {
 }
 
 const styles = StyleSheet.create({
-  header: {
-    width: '100%',
-    height: '100%',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
+  header:{
+    width:"100%",
+    height:60,
+    flexDirection:"row",
+    justifyContent:"space-between",
+    alignItems:"center",
+    paddingHorizontal:20
   },
+  // header: {
+  //   width: '100%',
+  //   height: '100%',
+  //   flexDirection: 'row',
+  //   alignItems: 'center',
+  //   justifyContent: 'center',
+  // },
   headerText: {
     fontWeight: 'bold',
     fontSize: 20,

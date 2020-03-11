@@ -4,106 +4,88 @@ import {
   Text,
   StyleSheet,
   Image,
-  TouchableOpacity,
-  Platform,
+  FlatList,
+  TouchableOpacity
 } from "react-native";
+import { Ionicons } from '@expo/vector-icons';
 
-export default class CustomComponent extends Component {
+function Item({ item, navigation }) {
+  return (
+    <TouchableOpacity style={styles.listItem} onPress={() => navigation(item.name)}>
+      <Ionicons name={item.icon} size={32} />
+      <Text style={styles.title}>{item.name}</Text>
+    </TouchableOpacity>
+  );
+}
+
+export default class Sidebar extends Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
 
+  state = {
+    routes: [
+      {
+        name: "Dashboard",
+        icon: "ios-home"
+      },
+      {
+        name: "Settings",
+        icon: "ios-settings"
+      },
+      {
+        name: "Profile",
+        icon: "ios-contact"
+      },
+    ]
+  }
+
   render() {
-    const { navigate } = this.props.navigation;
     return (
       <View style={styles.container}>
-        <View style={styles.containertopRow}>
-          <Image
-            style={styles.imageTopRow}
-            source={{
-              uri:
-                'https://cdn.pixabay.com/photo/2014/04/05/12/20/man-316917_960_720.jpg',
-            }}
-          />
-        </View>
-        <View style={styles.containerBottom}>
-          <TouchableOpacity
-            onPress={() => navigate('Dashboard')}
-            style={styles.containerBottomItem}
-          >
-            <View style={styles.button}>
-              <Text style={styles.txtBottom}>Dashboard</Text>
-            </View>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={() => navigate('Details')}
-            style={styles.containerBottomItem}
-          >
-            <View style={styles.button}>
-              <Text style={styles.txtBottom}>Details</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
+        <Image source={require("../assets/images/profile.jpg")} style={styles.profileImg} />
+        <Text style={{ fontWeight: "bold", fontSize: 16, marginTop: 10 }}>Sébastien Medel</Text>
+        <Text style={{ color: "gray", marginBottom: 10 }}>dioseb.m@gmail.com</Text>
+        <View style={styles.sidebarDivider}></View>
+        <FlatList
+          style={{ width: "100%", marginLeft: 30 }}
+          data={this.state.routes}
+          renderItem={({ item }) => <Item item={item} navigation={this.props.navigation.navigate} />}
+          keyExtractor={item => item.name}
+        />
       </View>
-    );
+    )
   }
 }
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: "#fff",
+    paddingTop: 40,
+    alignItems: "center",
     flex: 1
+
   },
-  containertopRow: {
-    marginTop: 50,
-    marginLeft: 10,
-    justifyContent: "center",
-    alignItems: 'center'
+  listItem: {
+    height: 60,
+    alignItems: "center",
+    flexDirection: "row",
   },
-  txtBottom: {
-    marginLeft: 10,
-    fontSize: 15,
-    fontWeight: '100'
+  title: {
+    fontSize: 18,
+    marginLeft: 20
   },
-  imageTopRow: {
-    marginBottom: 20,
-    height: 80,
+  profileImg: {
     width: 80,
-    ...Platform.select({
-      ios: {
-        borderRadius: 80 / 2
-      },
-      android: {
-        borderRadius: 80
-      }
-    })
+    height: 80,
+    borderRadius: 40,
+    marginTop: 20
   },
-  icon: {
-    height: 25,
-    width: 25,
-    marginRight: 10
-  },
-  button: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'flex-start'
-  },
-
-  containertopRowText: {
-    flexDirection: 'column',
-    marginLeft: 5
-  },
-
-  containerBottom: {
-    backgroundColor: '#999'
-  },
-  containerBottomItem: {
-    padding: 10,
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    borderBottomColor: '#E6FAFF',
-    borderBottomWidth: 0.5
+  sidebarDivider: {
+    height: 1,
+    width: "100%",
+    backgroundColor: "lightgray",
+    marginVertical: 10
   }
 });
