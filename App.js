@@ -3,7 +3,7 @@ import * as React from 'react';
 import { Asset } from 'expo-asset';
 import { AppLoading } from 'expo';
 
-import NavigationTree from './navigations/NavigationRoot_v5';
+import RootNavigator from './navigations/RootNavigator';
 
 import API from './firebase/utils/firebase';
 import { firebaseConfig } from './firebase/config/firebase_config';
@@ -42,6 +42,6 @@ export default class App extends React.Component {
         />
       );
     }
-    return <NavigationTree headerMode="none"/>
+    return <RootNavigator headerMode="none"/>
   }
 }
