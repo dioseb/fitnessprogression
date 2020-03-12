@@ -1,40 +1,38 @@
 import React from 'react';
-import { StyleSheet, Text, View} from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
+import { Header } from 'react-native-elements';
 
-export default function Header({ title, navigation }) {
+export default function HeaderBar({ title, navigation }) {
 
   const openMenu = () => {
     navigation.openDrawer();
   }
 
   return (
-    <View style={styles.header}>
-      <MaterialIcons name='menu' size={28} onPress={openMenu} style={styles.icon} />
-    </View>
+    <Header
+      leftComponent={{ icon: 'menu', color: '#fff', onPress: () => openMenu() }}
+      centerComponent={<Text style={styles.headerText}>{title}</Text>}
+    />
+    // <View style={styles.header}>
+    //   <MaterialIcons name='menu' size={28} onPress={openMenu} style={styles.icon} />
+    // </View>
   );
 }
 
 const styles = StyleSheet.create({
-  header:{
-    width:"100%",
-    height:60,
-    flexDirection:"row",
-    justifyContent:"space-between",
-    alignItems:"center",
-    paddingHorizontal:20
+  header: {
+    width: "100%",
+    height: 60,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingHorizontal: 20
   },
-  // header: {
-  //   width: '100%',
-  //   height: '100%',
-  //   flexDirection: 'row',
-  //   alignItems: 'center',
-  //   justifyContent: 'center',
-  // },
   headerText: {
     fontWeight: 'bold',
     fontSize: 20,
-    color: '#333',
+    color: '#fff',
     letterSpacing: 1,
   },
   icon: {

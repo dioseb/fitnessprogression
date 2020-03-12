@@ -1,13 +1,11 @@
 import * as React from 'react';
 import { StyleSheet, Button, View, Text } from 'react-native';
 
-import SignOut from '../../firebase/utils/signOut';
-
 function DashboardScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <Text>DashboardScreen</Text>
-        <Button onPress={SignOut} title="Sign Out" />
+        <Button onPress={() => navigation.navigate('Settings')} title="Go to Settings" />
     </View>
   );
 }

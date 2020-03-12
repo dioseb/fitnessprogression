@@ -5,12 +5,14 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from '@expo/vector-icons';
 
-import Sidebar from '../components/CustomDrawerContentComponent';
+//import Sidebar from '../components/CustomDrawerContentComponent';
+import Sidebar from '../components/SideBar';
 import Header from '../components/Header';
 
 import Dashboard from '../screens/Home/DashboardScreen';
 import Loading from '../screens/Auth/LoadingScreen';
 import LoginAnimated from '../screens/Auth/LoginAnimatedScreen';
+import Login from '../screens/Auth/LoginScreen';
 import SignUp from '../screens/Auth/SignUpScreen';
 import Profile from '../screens/Home/ProfileScreen';
 import Settings from '../screens/Home/SettingsScreen';
@@ -77,7 +79,7 @@ function DashboardDrawerNavigator() {
     <Drawer.Navigator
       initialRouteName='Dashboard'
       drawerType='slide'
-      drawerContent= { props => <Sidebar {...props}/> }
+      drawerContent= { props => <Sidebar lastName="Sébastien" firstName="Medel" email="dioseb.m@gmail.com" {...props}/> }
       screenOptions={({ route }) => ({
         drawerIcon: ({ focused, color, size }) => {
           let iconName;
@@ -133,7 +135,7 @@ function MyDashboardStack() {
         options={
           ({ navigation }) => {
           return {
-            headerLeft: () => <Header navigation={navigation} />
+            header: () => <Header title='Dashboard' navigation={navigation} />
           }
         }}
       />
@@ -150,7 +152,7 @@ function MySettingsStack() {
       options={
         ({ navigation }) => {
         return {
-          headerLeft: () => <Header navigation={navigation} />
+          header: () => <Header title='Settings' navigation={navigation} />
         }
       }} />
     </Stack.Navigator>
@@ -166,7 +168,7 @@ function MyProfileStack() {
       options={
         ({ navigation }) => {
         return {
-          headerLeft: () => <Header navigation={navigation} />
+          header: () => <Header title='Profile' navigation={navigation} />
         }
       }} />
     </Stack.Navigator>

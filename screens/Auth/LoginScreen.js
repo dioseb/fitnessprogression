@@ -1,71 +1,55 @@
-import React from 'react';
-import { StyleSheet, View, Button, Image, ImageBackground, Text, Dimensions, TextInput } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import * as React from 'react';
+import { 
+  Text,
+  View, 
+  TouchableOpacity, 
+  StatusBar,
+  Image,
+  KeyboardAvoidingView
+ } from 'react-native'
 
-import signInWithGoogleAsync from '../../firebase/utils/signInWithGoogle';
-import signInWithFacebookAsync from '../../firebase/utils/signInWithFacebook';
+import { loginStyles } from '../../styles/styles';
+import color from '../../styles/colors';
+import MyTextInput from '../../components/MyTextInput';
 
-import bground from '../../assets/images/background.png';
-import logo from '../../assets/images/logo.png';
+const LoginScreen = () => {
+  const [hidePassword, setHidePassword] = React.useState(false);
 
-const { width: WIDTH } = Dimensions.get('window');
-
-const LoginScreen = () => (
-  
-  <ImageBackground source={bground} style={styles.backgroundContainer}>
-    <View style={styles.logoContainer}>
-      <Image source={logo} style={styles.logo}></Image>
-      <Text style={styles.logoText}>Fitness Progression</Text>
+  return (
+    <KeyboardAvoidingView style={{
+      flex: 1,
+      backgroundColor: 'white',
+      justifyContent: 'flex-end'
+    }}
+    behavior="height" enabled>
+    <View style={ [loginStyles.container, {padding: 50}] }>
+      <StatusBar backgroundColor={color.BLUE} translucent={true}></StatusBar>
+      <View style={loginStyles.logo}>
+        <Image source={require('../../assets/images/instaIcon.png')}
+        style={{height:250, width:250}}/>
+      </View>
+      <MyTextInput keyboardType='email-address' placeholder='Email' image='user'/>
+      <MyTextInput keyboardType={null} placeholder='Password' image='lock'
+      bolGone={true} secureTextEntry={hidePassword}
+      onPress={() => setHidePassword(!hidePassword)}/>
+      <View style={loginStyles.btnMain}>
+        <TouchableOpacity>
+          <Text style={loginStyles.btntxt}>LogIn</Text>
+        </TouchableOpacity>
+      </View>
+      <View style={loginStyles.btnTransparent}>
+        <TouchableOpacity>
+          <Text style={ [loginStyles.btntxt, { color: color.BLUE }]}>Register</Text>
+        </TouchableOpacity>
+      </View>
+      <View>
+        <TouchableOpacity>
+          <Text style={ [loginStyles.txtTransparent, { textDecorationLine: 'underline' }]}>Password lost ?</Text>
+        </TouchableOpacity>
+      </View>
     </View>
+    </KeyboardAvoidingView>
+  )
+}
 
-    <View>
-      <Ionicons name={"ios-person"} size={28} color={'black'} style={styles.inputIcon} />
-      <TextInput
-        style={styles.input}
-        placeholder={'Username'}
-        placeholderTextColor={'black'}
-        underlineColorAndroid='transparent'
-      />
-      <Button title="Sign In With Google" onPress={signInWithGoogleAsync} />
-      <Button title="Sign In With Facebook" onPress={signInWithFacebookAsync} />
-    </View>
-  </ImageBackground>
-);
 export default LoginScreen;
-
-const styles = StyleSheet.create({
-  backgroundContainer: {
-    flex: 1,
-    width: null,
-    height: null,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  logoContainer: {
-    width: WIDTH,
-    alignItems: 'center'
-  },
-  logo: {
-    width: 256,
-    height: 256
-  },
-  logoText: {
-    color: 'white',
-    fontSize: 40,
-    fontWeight: '600',
-    opacity: 1
-  },
-  input: {
-    width: WIDTH - 80,
-    height: 45,
-    borderRadius: 20,
-    fontSize: 17,
-    paddingLeft: 45,
-    backgroundColor: 'white'
-  },
-  inputIcon: {
-    position: 'absolute',
-    top: 8,
-    left: 37
-  }
-});
