@@ -1,5 +1,15 @@
-import React, { Component } from 'react';
-import { View, Text, StyleSheet, Dimensions, TextInput, KeyboardAvoidingView, Button, TouchableOpacity } from 'react-native';
+import * as React from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Dimensions,
+  TextInput,
+  KeyboardAvoidingView,
+  Button,
+  TouchableOpacity,
+  StatusBar
+} from 'react-native';
 
 import { SocialIcon } from 'react-native-elements'
 import Svg, { Image, Circle, ClipPath } from 'react-native-svg';
@@ -9,232 +19,260 @@ import { TapGestureHandler, State } from 'react-native-gesture-handler';
 import signInWithGoogleAsync from '../../firebase/utils/signInWithGoogle';
 import signInWithFacebookAsync from '../../firebase/utils/signInWithFacebook';
 
+import * as Animatable from 'react-native-animatable';
+
 const { width, height } = Dimensions.get('window');
 
-const {
-  Value,
-  event,
-  block,
-  cond,
-  eq,
-  set,
-  Clock,
-  startClock,
-  stopClock,
-  debug,
-  timing,
-  clockRunning,
-  interpolate,
-  Extrapolate,
-  concat
-} = Animated;
+const LoginAnimatedScreen = ({ navigation }) => {
 
-function runTiming(clock, value, dest) {
-  const state = {
-    finished: new Value(0),
-    position: new Value(0),
-    time: new Value(0),
-    frameTime: new Value(0)
-  };
+  const {
+    Value,
+    event,
+    block,
+    cond,
+    eq,
+    set,
+    Clock,
+    startClock,
+    stopClock,
+    timing,
+    clockRunning,
+    interpolate,
+    Extrapolate,
+    concat
+  } = Animated;
 
-  const config = {
-    duration: 1000,
-    toValue: new Value(0),
-    easing: Easing.inOut(Easing.ease)
-  };
+  function runTiming(clock, value, dest) {
+    const state = {
+      finished: new Value(0),
+      position: new Value(0),
+      time: new Value(0),
+      frameTime: new Value(0)
+    };
 
-  return block([
-    cond(clockRunning(clock), 0, [
-      set(state.finished, 0),
-      set(state.time, 0),
-      set(state.position, value),
-      set(state.frameTime, 0),
-      set(config.toValue, dest),
-      startClock(clock)
-    ]),
-    timing(clock, state, config),
-    cond(state.finished, stopClock(clock)),
-    state.position
-  ]);
-}
-class LoginAnimatedScreen extends Component {
-  constructor() {
-    super();
+    const config = {
+      duration: 1000,
+      toValue: new Value(0),
+      easing: Easing.inOut(Easing.ease)
+    };
 
-    this.buttonOpacity = new Value(1);
-
-    this.onStateChange = event([
-      {
-        nativeEvent: ({ state }) =>
-          block([
-            cond(
-              eq(state, State.END),
-              set(this.buttonOpacity, runTiming(new Clock(), 1, 0))
-            )
-          ])
-      }
+    return block([
+      cond(clockRunning(clock), 0, [
+        set(state.finished, 0),
+        set(state.time, 0),
+        set(state.position, value),
+        set(state.frameTime, 0),
+        set(config.toValue, dest),
+        startClock(clock)
+      ]),
+      timing(clock, state, config),
+      cond(state.finished, stopClock(clock)),
+      state.position
     ]);
-
-    this.onCloseState = event([
-      {
-        nativeEvent: ({ state }) =>
-          block([
-            cond(
-              eq(state, State.END),
-              set(this.buttonOpacity, runTiming(new Clock(), 0, 1))
-            )
-          ])
-      }
-    ]);
-
-    this.buttonY = interpolate(this.buttonOpacity, {
-      inputRange: [0, 1],
-      outputRange: [100, 0],
-      extrapolate: Extrapolate.CLAMP
-    });
-
-    this.bgY = interpolate(this.buttonOpacity, {
-      inputRange: [0, 1],
-      outputRange: [-height / 2.5 - 50, 0],
-      extrapolate: Extrapolate.CLAMP
-    });
-
-    this.textInputZindex = interpolate(this.buttonOpacity, {
-      inputRange: [0, 1],
-      outputRange: [1, -1],
-      extrapolate: Extrapolate.CLAMP
-    });
-
-    this.textInputY = interpolate(this.buttonOpacity, {
-      inputRange: [0, 1],
-      outputRange: [0, 100],
-      extrapolate: Extrapolate.CLAMP
-    });
-
-    this.textInputOpacity = interpolate(this.buttonOpacity, {
-      inputRange: [0, 1],
-      outputRange: [1, 0],
-      extrapolate: Extrapolate.CLAMP
-    });
-
-    this.rotateCross = interpolate(this.buttonOpacity, {
-      inputRange: [0, 1],
-      outputRange: [180, 360],
-      extrapolate: Extrapolate.CLAMP
-    });
   }
-  render() {
-    return (
-      <KeyboardAvoidingView
+
+  function goToScreen(routeName) {
+    navigation.navigate(routeName)
+  }
+
+  const buttonOpacity = new Value(1);
+
+  const onStateChange = event([
+    {
+      nativeEvent: ({ state }) =>
+        block([
+          cond(
+            eq(state, State.END),
+            set(buttonOpacity, runTiming(new Clock(), 1, 0))
+          )
+        ])
+    }
+  ]);
+
+  const onCloseState = event([
+    {
+      nativeEvent: ({ state }) =>
+        block([
+          cond(
+            eq(state, State.END),
+            set(buttonOpacity, runTiming(new Clock(), 0, 1))
+          )
+        ])
+    }
+  ]);
+
+  const buttonY = interpolate(buttonOpacity, {
+    inputRange: [0, 1],
+    outputRange: [100, 0],
+    extrapolate: Extrapolate.CLAMP
+  });
+
+  const bgY = interpolate(buttonOpacity, {
+    inputRange: [0, 1],
+    outputRange: [-height / 2.5 - 50, 0],
+    extrapolate: Extrapolate.CLAMP
+  });
+
+  const textInputZindex = interpolate(buttonOpacity, {
+    inputRange: [0, 1],
+    outputRange: [1, -1],
+    extrapolate: Extrapolate.CLAMP
+  });
+
+  const textInputY = interpolate(buttonOpacity, {
+    inputRange: [0, 1],
+    outputRange: [0, 100],
+    extrapolate: Extrapolate.CLAMP
+  });
+
+  const textInputOpacity = interpolate(buttonOpacity, {
+    inputRange: [0, 1],
+    outputRange: [1, 0],
+    extrapolate: Extrapolate.CLAMP
+  });
+
+  const rotateCross = interpolate(buttonOpacity, {
+    inputRange: [0, 1],
+    outputRange: [180, 360],
+    extrapolate: Extrapolate.CLAMP
+  })
+
+  return (
+    <KeyboardAvoidingView
+      style={{
+        flex: 1,
+        backgroundColor: 'white',
+        justifyContent: 'flex-end'
+      }}
+      behavior="height" enabled
+    >
+      <Animated.View
         style={{
-          flex: 1,
-          backgroundColor: 'white',
-          justifyContent: 'flex-end'
+          ...StyleSheet.absoluteFill,
+          transform: [{ translateY: bgY }]
         }}
-        behavior="height" enabled
       >
+        <Svg height={height + 50} width={width}>
+          <ClipPath id="clip">
+            <Circle r={height + 50} cx={width / 2} />
+          </ClipPath>
+          <Image
+            href={require('../../assets/images/background.png')}
+            height={height + 50}
+            width={width}
+            preserveAspectRatio="xMidYMid slice"
+            clipPath="url(#clip)"
+          />
+        </Svg>
+      </Animated.View>
+      <View style={styles.container}>
+      <Animatable.Image
+                easing="ease-out"
+                iterationCount="infinite"
+                style={{
+                    width: 100,
+                    height: 100,
+                    margin: 100
+                }}
+                source={require('../../assets/images/instaIcon.png')}
+            />
+      </View>
+      <View style={{ height: height / 2.5, justifyContent: 'center' }}>
         <Animated.View
           style={{
-            ...StyleSheet.absoluteFill,
-            transform: [{ translateY: this.bgY }]
+            opacity: buttonOpacity,
+            transform: [{ translateY: buttonY }]
           }}
         >
-          <Svg height={height + 50} width={width}>
-            <ClipPath id="clip">
-              <Circle r={height + 50} cx={width / 2} />
-            </ClipPath>
-            <Image
-              href={require('../../assets/images/background.png')}
-              height={height + 50}
-              width={width}
-              preserveAspectRatio="xMidYMid slice"
-              clipPath="url(#clip)"
-            />
-          </Svg>
+          <SocialIcon
+            title='Sign Up'
+            light
+            button
+            onPress={() => goToScreen('SignUp')}
+          />
         </Animated.View>
-        <View style={{ height: height / 2.5, justifyContent: 'center' }}>
-            <Animated.View
-              style={{
-                opacity: this.buttonOpacity,
-                transform: [{ translateY: this.buttonY }]
-              }}
+        <Animated.View
+          style={{
+            opacity: buttonOpacity,
+            transform: [{ translateY: buttonY }]
+          }}
+        >
+          <SocialIcon
+            title='Sign in with Facebook'
+            button
+            type='facebook'
+            onPress={signInWithFacebookAsync}
+          />
+        </Animated.View>
+        <Animated.View
+          style={{
+            opacity: buttonOpacity,
+            transform: [{ translateY: buttonY }]
+          }}
+        >
+          <SocialIcon
+            title='Sign in with Google'
+            button
+            type='google'
+            onPress={signInWithGoogleAsync}
+          />
+        </Animated.View>
+        <View style={{ ...styles.fixToText }}>
+        <Text style={{ fontSize: 14, alignSelf: 'center', color: 'white' }}>Already have an account ? </Text>
+            <TouchableOpacity
+              style={styles.text}
+              onPress={() => goToScreen('SignIn')}
             >
-              <SocialIcon
-              title='Sign Up'
-              light
-              button
-              onPress={() => this.props.navigation.navigate('SignUp')}
-            />
-            </Animated.View>
+              <Text
+                style={{
+                  fontSize: 14,
+                  alignSelf: 'center',
+                  color: 'rgb(33, 150, 243)'
+                }}>Sign In</Text>
+            </TouchableOpacity>
+            </View>
+        {/* <TapGestureHandler onHandlerStateChange={onStateChange}>
           <Animated.View
             style={{
-              opacity: this.buttonOpacity,
-              transform: [{ translateY: this.buttonY }]
+              ...styles.fixToText,
+              opacity: buttonOpacity,
+              transform: [{ translateY: buttonY }]
             }}
           >
-            <SocialIcon
-              title='Sign in with Facebook'
-              button
-              type='facebook'
-              onPress={signInWithFacebookAsync}
-            />
-          </Animated.View>
-          <Animated.View
-            style={{
-              opacity: this.buttonOpacity,
-              transform: [{ translateY: this.buttonY }]
-            }}
-          >
-            <SocialIcon
-              title='Sign in with Google'
-              button
-              type='google'
-              onPress={signInWithGoogleAsync}
-            />
-          </Animated.View>
-          <TapGestureHandler onHandlerStateChange={this.onStateChange}>
-            <Animated.View
-              style={{
-                ...styles.fixToText,
-                opacity: this.buttonOpacity,
-                transform: [{ translateY: this.buttonY }]
-              }}
+            <Text style={{ fontSize: 14, alignSelf: 'center', color: 'white' }}>Already have an account ? </Text>
+            <TouchableOpacity
+              style={styles.text}
+              onPress={() => goToScreen('SignIn')}
             >
-              <Text style={{ fontSize: 14, alignSelf: 'center', color: 'white' }}>Already have an account ? </Text>
-              <TouchableOpacity
-                style={styles.text}
-                onPress={this.onPress}
-              >
-                <Text
-                  onPress={() => console.log('1st')}
-                  style={{
-                    fontSize: 14,
-                    alignSelf: 'center',
-                    color: 'rgb(33, 150, 243)'
-                  }}>Sign In</Text>
-              </TouchableOpacity>
+              <Text
+                style={{
+                  fontSize: 14,
+                  alignSelf: 'center',
+                  color: 'rgb(33, 150, 243)'
+                }}>Sign In</Text>
+            </TouchableOpacity>
+          </Animated.View>
+        </TapGestureHandler> */}
+        {/* <Animated.View style={{
+          zIndex: textInputZindex,
+          opacity: textInputOpacity,
+          transform: [{ translateY: textInputY }],
+          height: height / 2.5,
+          ...StyleSheet.absoluteFill, top: null, justifyContent: 'center'
+        }}
+        >
+          <TapGestureHandler onHandlerStateChange={onCloseState}>
+            <Animated.View style={styles.closeButton}>
+              <Animated.Text style={{
+                fontSize: 15,
+                transform: [{ rotate: concat(rotateCross, 'deg') }]
+              }}>
+                X
+                </Animated.Text>
             </Animated.View>
           </TapGestureHandler>
-          <Animated.View style={{
-            zIndex: this.textInputZindex,
-            opacity: this.textInputOpacity,
-            transform: [{ translateY: this.textInputY }],
-            height: height / 2.5,
-            ...StyleSheet.absoluteFill, top: null, justifyContent: 'center'
-          }}
-          >
-            <TapGestureHandler onHandlerStateChange={this.onCloseState}>
-              <Animated.View style={styles.closeButton}>
-                <Animated.Text style={{
-                  fontSize: 15,
-                  transform: [{ rotate: concat(this.rotateCross, 'deg') }]
-                }}>
-                  X
-                </Animated.Text>
-              </Animated.View>
-            </TapGestureHandler>
 
-            <TextInput
+          <TextInput
               placeholder="EMAIL"
               style={styles.textInput}
               placeholderTextColor="black"
@@ -252,12 +290,12 @@ class LoginAnimatedScreen extends Component {
                 light
               />
             </Animated.View>
-          </Animated.View>
-        </View>
-      </KeyboardAvoidingView>
-    );
-  }
+        </Animated.View> */}
+      </View>
+    </KeyboardAvoidingView>
+  );
 }
+
 export default LoginAnimatedScreen;
 
 const styles = StyleSheet.create({

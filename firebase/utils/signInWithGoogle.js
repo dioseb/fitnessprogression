@@ -7,6 +7,7 @@ import { iosClientId, androidClientId } from '../config/google_config';
 //import { GoogleSignIn } from 'expo';
 
 const signInWithGoogleAsync = async () => {
+    
     console.log("Button Clicked !!!");
     try {
         const result = await Google.logInAsync({
@@ -21,6 +22,7 @@ const signInWithGoogleAsync = async () => {
         if (result.type === 'success') {
             onSignInGoogle(result);
             console.log(`Result.accessToken ${result.accessToken}`);
+
             return result.accessToken;
         }
         return { cancelled: true };

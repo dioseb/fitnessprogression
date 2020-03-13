@@ -50,7 +50,7 @@ const Sidebar = ({ navigation, lastName, firstName, email }) => {
             />
             <View style={styles.sidebarDivider}></View>
             <View style={styles.container}>
-                <Button onPress={SignOut} title="Sign Out" />
+                <Button onPress={() => SignOut()} title="Sign Out" />
             </View>
         </View>
     )

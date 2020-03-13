@@ -9,11 +9,13 @@ import { Ionicons } from '@expo/vector-icons';
 import Sidebar from '../components/SideBar';
 import Header from '../components/Header';
 
-import Dashboard from '../screens/Home/DashboardScreen';
 import Loading from '../screens/Auth/LoadingScreen';
 import LoginAnimated from '../screens/Auth/LoginAnimatedScreen';
-import Login from '../screens/Auth/LoginScreen';
+import SignIn from '../screens/Auth/SignInScreen';
 import SignUp from '../screens/Auth/SignUpScreen';
+import PasswordLost from '../screens/Auth/PasswordLostScreen';
+
+import Dashboard from '../screens/Home/DashboardScreen';
 import Profile from '../screens/Home/ProfileScreen';
 import Settings from '../screens/Home/SettingsScreen';
 
@@ -24,6 +26,8 @@ function AuthStack() {
     <Stack.Navigator initialRouteName='Loading' headerMode="none" screenOptions={{gestureEnabled: false}}>
       <Stack.Screen name="Loading" component={Loading} />
       <Stack.Screen name="SignUp" component={SignUp} />
+      <Stack.Screen name="SignIn" component={SignIn} />
+      <Stack.Screen name="PasswordLost" component={PasswordLost} />
       <Stack.Screen name="LoginAnimated" component={LoginAnimated} />
     </Stack.Navigator>
   );
