@@ -26,7 +26,7 @@ const SignInScreen = ({ navigation }) => {
 
     function iniciarSesion() {
         loginAction({
-            type: 'sign-in', data: {
+            type: 'sign-up', data: {
                 email, password
             }
         })
@@ -47,8 +47,8 @@ const SignInScreen = ({ navigation }) => {
             behavior="height" enabled>
             <ImageBackground source={bground} style={styles.container}>
                 <View style={styles.fixedView}>
-                    <TouchableOpacity style={styles.listItem} onPress={() => goToScreen('LoginAnimated')}>
-                        <Ionicons name={'ios-arrow-back'} color={'white'} size={32} />
+                    <TouchableOpacity onPress={() => goToScreen('LoginAnimated')}>
+                        <Ionicons name={'ios-arrow-back'} color={'white'} size={34} />
                     </TouchableOpacity>
                 </View>
                 <Text style={styles.logo}>Sign In</Text>
@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
     },
     forgot: {
         color: "white",
-        fontSize: 11
+        fontSize: 12
     },
     loginBtn: {
         width: "80%",
@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
     fixedView: {
         position: 'absolute',
         left: 20,
-        top: 30,
+        top: 40,
         flexDirection: 'row',
         justifyContent: 'flex-start',
     }

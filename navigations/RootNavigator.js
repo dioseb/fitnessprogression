@@ -83,7 +83,7 @@ function DashboardDrawerNavigator() {
     <Drawer.Navigator
       initialRouteName='Dashboard'
       drawerType='slide'
-      drawerContent= { props => <Sidebar lastName="Sébastien" firstName="Medel" email="dioseb.m@gmail.com" {...props}/> }
+      drawerContent= { props => <Sidebar {...props}/> }
       screenOptions={({ route }) => ({
         drawerIcon: ({ focused, color, size }) => {
           let iconName;

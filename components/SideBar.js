@@ -6,10 +6,13 @@ import {
     Image,
     FlatList,
     TouchableOpacity,
-    Button
+    Button,
+    BackHandler
 } from "react-native";
+
 import { Ionicons } from '@expo/vector-icons';
 
+import { UserContext } from '../context/UserContext';
 import SignOut from '../firebase/utils/signOut';
 
 function Item({ item, navigate }) {
@@ -21,7 +24,41 @@ function Item({ item, navigate }) {
     );
 }
 
-const Sidebar = ({ navigation, lastName, firstName, email }) => {
+function useBackButton(handler) {
+    React.useEffect(() => {
+        BackHandler.addEventListener("hardwareBackPress", handler)
+
+        return () => {
+            console.log('hardwareBackPress Close')
+            BackHandler.removeEventListener("hardwareBackPress", handler)
+        }
+    }, [handler])
+}
+
+const Sidebar = ({ navigation }) => {
+
+    useBackButton(desconectarse)
+    const [login, loginAction] = React.useContext(UserContext)
+
+    function goToScreen(routeName) {
+        navigation.navigate(routeName)
+    }
+
+    function desconectarse() {
+        loginAction({
+            type: 'sign-out',
+            data: {}
+        })
+        goToScreen('LoginAnimated')
+    }
+
+    function signOut() {
+        if (login) {
+            desconectarse();
+        }
+        SignOut();
+    }
+
     const routes = [
         {
             name: "Dashboard",
@@ -39,8 +76,8 @@ const Sidebar = ({ navigation, lastName, firstName, email }) => {
     return (
         <View style={styles.container}>
             <Image source={require("../assets/images/profile.jpg")} style={styles.profileImg} />
-            <Text style={{ fontWeight: "bold", fontSize: 16, marginTop: 10 }}>{lastName}{firstName}</Text>
-            <Text style={{ color: "gray", marginBottom: 10 }}>{email}</Text>
+            {/* <Text style={{ fontWeight: "bold", fontSize: 16, marginTop: 10 }}>{login}</Text> */}
+            <Text style={{ color: "gray", marginBottom: 10 }}>{login.user.email}</Text>
             <View style={styles.sidebarDivider}></View>
             <FlatList
                 style={{ width: "100%", marginLeft: 30 }}
@@ -50,7 +87,7 @@ const Sidebar = ({ navigation, lastName, firstName, email }) => {
             />
             <View style={styles.sidebarDivider}></View>
             <View style={styles.container}>
-                <Button onPress={() => SignOut()} title="Sign Out" />
+                <Button onPress={() => signOut()} title="Sign Out" />
             </View>
         </View>
     )

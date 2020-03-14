@@ -20,8 +20,6 @@ export default function PasswordLostScreen({ navigation }) {
     const [login, loginAction] = React.useContext(UserContext)
 
     const [email, setEmail] = React.useState('')
-    const [password, setPassword] = React.useState('')
-    const [hidePassword, setHidePassword] = React.useState(false)
 
     function iniciarSesion() {
         loginAction({
@@ -43,7 +41,7 @@ export default function PasswordLostScreen({ navigation }) {
             behavior="height" enabled>
             <ImageBackground source={bground} style={styles.container}>
                 <View style={styles.fixedView}>
-                    <TouchableOpacity style={styles.listItem} onPress={() => goToScreen('SignIn')}>
+                    <TouchableOpacity onPress={() => goToScreen('SignIn')}>
                         <Ionicons name={'ios-arrow-back'} color={'white'} size={32} />
                     </TouchableOpacity>
                 </View>

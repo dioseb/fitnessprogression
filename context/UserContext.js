@@ -19,15 +19,18 @@ const userReducer = (state = initialState, payload) => {
 
         case 'sign-in':
             console.log('Bienvenidos al sistema')
+            console.log('User signed in !!!')
             return { ...state, user: payload.data, activo: true }
         case 'sign-up':
             saveUser(payload.data).then((msg) => {
-                console.log('user guardado')
+                console.log(`SignUp UserContext: ${msg}`)
+                console.log('User registered !!!')
             })
             return { ...state, user: payload.data, activo: true }
         case 'sign-out':
             deleteUser().then((msg) => {
-                console.log(msg)
+                console.log(`SignOut UserContext: ${msg}`)
+                console.log('User signed out !!!')
             })
             return { ...state, user: payload.data, activo: false }
         case 'lost-password':

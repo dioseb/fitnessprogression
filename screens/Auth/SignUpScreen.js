@@ -29,7 +29,9 @@ const SignInScreen = ({ navigation }) => {
   function iniciarSesion() {
     loginAction({
       type: 'sign-up', data: {
-        email, password
+        email, password, 
+        confirmPassword,
+        lastname, firstname
       }
     })
     goToScreen('Dashboard')
@@ -49,7 +51,7 @@ const SignInScreen = ({ navigation }) => {
       behavior="height" enabled>
       <ImageBackground source={bground} style={styles.container}>
         <View style={styles.fixedView}>
-          <TouchableOpacity style={styles.listItem} onPress={() => goToScreen('LoginAnimated')}>
+          <TouchableOpacity onPress={() => goToScreen('LoginAnimated')}>
             <Ionicons name={'ios-arrow-back'} color={'white'} size={32} />
           </TouchableOpacity>
         </View>
