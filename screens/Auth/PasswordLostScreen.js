@@ -6,7 +6,10 @@ import {
     TouchableOpacity,
     KeyboardAvoidingView,
     ImageBackground,
-    StyleSheet
+    StyleSheet,
+    Platform,
+    TouchableWithoutFeedback,
+    Keyboard
 } from 'react-native';
 
 import { Ionicons } from '@expo/vector-icons';
@@ -33,32 +36,34 @@ export default function PasswordLostScreen({ navigation }) {
     }
     return (
         <KeyboardAvoidingView
+        behavior="padding"  enabled
             style={{
                 flex: 1,
                 backgroundColor: 'white',
                 justifyContent: 'flex-end'
-            }}
-            behavior="height" enabled>
-            <ImageBackground source={bground} style={styles.container}>
-                <View style={styles.fixedView}>
-                    <TouchableOpacity onPress={() => goToScreen('SignIn')}>
-                        <Ionicons name={'ios-arrow-back'} color={'white'} size={32} />
+            }}>
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                <ImageBackground source={bground} style={styles.container}>
+                    <View style={styles.fixedView}>
+                        <TouchableOpacity onPress={() => goToScreen('SignIn')}>
+                            <Ionicons name={'ios-arrow-back'} color={'white'} size={36} />
+                        </TouchableOpacity>
+                    </View>
+                    <Text style={styles.logo}>Password lost ?</Text>
+                    <View style={styles.inputView} >
+                        <TextInput
+                            keyboardType='email-address'
+                            style={styles.inputText}
+                            placeholder="Email..."
+                            placeholderTextColor="#666"
+                            value={email}
+                            onChangeText={(email) => setEmail(email)} />
+                    </View>
+                    <TouchableOpacity style={styles.loginBtn} onPress={() => iniciarSesion()}>
+                        <Text style={styles.loginText}>RESET PASSWORD</Text>
                     </TouchableOpacity>
-                </View>
-                <Text style={styles.logo}>Password lost ?</Text>
-                <View style={styles.inputView} >
-                    <TextInput
-                        keyboardType='email-address'
-                        style={styles.inputText}
-                        placeholder="Email..."
-                        placeholderTextColor="#666"
-                        value={email}
-                        onChangeText={(email) => setEmail(email)} />
-                </View>
-                <TouchableOpacity style={styles.loginBtn} onPress={() => iniciarSesion()}>
-                    <Text style={styles.loginText}>RESET PASSWORD</Text>
-                </TouchableOpacity>
-            </ImageBackground>
+                </ImageBackground>
+            </TouchableWithoutFeedback>
         </KeyboardAvoidingView>
     )
 }
@@ -104,7 +109,7 @@ const styles = StyleSheet.create({
     fixedView: {
         position: 'absolute',
         left: 20,
-        top: 30,
+        top: 40,
         flexDirection: 'row',
         justifyContent: 'flex-start',
     }

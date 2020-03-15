@@ -4,8 +4,8 @@ const USER_KEY = '@user:key'
 
 async function saveUser(user){
     try {
-        const item = await AsyncStorage.setItem(USER_KEY, JSON.stringify(user))
-        console.log(`saveUser AsyncStorage : ${JSON.stringify(item)}`)
+        await AsyncStorage.setItem(USER_KEY, JSON.stringify(user))
+        console.log(`saveUser AsyncStorage : ${JSON.stringify(user)}`)
         return JSON.stringify(user)
     } catch (error) {
         // Error setting data

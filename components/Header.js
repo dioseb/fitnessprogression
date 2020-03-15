@@ -11,6 +11,7 @@ export default function HeaderBar({ title, navigation }) {
 
   return (
     <Header
+      backgroundColor="#fb5b5a"
       leftComponent={{ icon: 'menu', color: '#fff', onPress: () => openMenu() }}
       centerComponent={<Text style={styles.headerText}>{title}</Text>}
     />

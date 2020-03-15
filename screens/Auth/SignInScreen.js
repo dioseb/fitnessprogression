@@ -6,7 +6,10 @@ import {
     TextInput,
     KeyboardAvoidingView,
     TouchableOpacity,
-    ImageBackground
+    ImageBackground,
+    Platform,
+    TouchableWithoutFeedback,
+    Keyboard
 } from 'react-native';
 
 import { Ionicons } from '@expo/vector-icons';
@@ -39,51 +42,52 @@ const SignInScreen = ({ navigation }) => {
 
     return (
         <KeyboardAvoidingView
+        behavior="padding"  enabled
             style={{
                 flex: 1,
                 backgroundColor: 'white',
                 justifyContent: 'flex-end'
-            }}
-            behavior="height" enabled>
-            <ImageBackground source={bground} style={styles.container}>
-                <View style={styles.fixedView}>
-                    <TouchableOpacity onPress={() => goToScreen('LoginAnimated')}>
-                        <Ionicons name={'ios-arrow-back'} color={'white'} size={34} />
+            }}>
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                <ImageBackground source={bground} style={styles.container}>
+                    <View style={styles.fixedView}>
+                        <TouchableOpacity onPress={() => goToScreen('LoginAnimated')}>
+                            <Ionicons name={'ios-arrow-back'} color={'white'} size={36} />
+                        </TouchableOpacity>
+                    </View>
+                    <Text style={styles.logo}>Sign In</Text>
+                    <View style={styles.inputView} >
+                        <TextInput
+                            keyboardType='email-address'
+                            style={styles.inputText}
+                            placeholder="Email..."
+                            placeholderTextColor="#666"
+                            value={email}
+                            onChangeText={(email) => setEmail(email)} />
+                    </View>
+                    <View style={styles.inputView} >
+                        <TextInput
+                            keyboardType={null}
+                            secureTextEntry={hidePassword}
+                            style={styles.inputText}
+                            placeholder="Password..."
+                            placeholderTextColor="#666"
+                            value={password}
+                            onPress={() => setHidePassword(!hidePassword)}
+                            onChangeText={(password) => setPassword(password)} />
+                    </View>
+                    <TouchableOpacity onPress={() => goToScreen('PasswordLost')}>
+                        <Text style={styles.forgot}>Forgot Password?</Text>
                     </TouchableOpacity>
-                </View>
-                <Text style={styles.logo}>Sign In</Text>
-                <View style={styles.inputView} >
-                    <TextInput
-                        keyboardType='email-address'
-                        style={styles.inputText}
-                        placeholder="Email..."
-                        placeholderTextColor="#666"
-                        value={email}
-                        onChangeText={(email) => setEmail(email)} />
-                </View>
-                <View style={styles.inputView} >
-                    <TextInput
-                        keyboardType={null}
-                        secureTextEntry={hidePassword}
-                        style={styles.inputText}
-                        placeholder="Password..."
-                        placeholderTextColor="#666"
-                        value={password}
-                        onPress={() => setHidePassword(!hidePassword)}
-                        onChangeText={(password) => setPassword(password)} />
-                </View>
-                <TouchableOpacity onPress={() => goToScreen('PasswordLost')}>
-                    <Text style={styles.forgot}>Forgot Password?</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.loginBtn} onPress={() => iniciarSesion()}>
-                    <Text style={styles.loginText}>LOGIN</Text>
-                </TouchableOpacity>
-                {/* <TouchableOpacity onPress={() => goToScreen('SignUp')}>
+                    <TouchableOpacity style={styles.loginBtn} onPress={() => iniciarSesion()}>
+                        <Text style={styles.loginText}>LOGIN</Text>
+                    </TouchableOpacity>
+                    {/* <TouchableOpacity onPress={() => goToScreen('SignUp')}>
                         <Text style={styles.loginText}>Signup</Text>
                     </TouchableOpacity> */}
-            </ImageBackground>
+                </ImageBackground>
 
-            {/* <View style={[mainStyles.container, { padding: 50 }]}>
+                {/* <View style={[mainStyles.container, { padding: 50 }]}>
             <MyTextInput keyboardType='email-address' placeholder='Email' image='user'
               value={email} onChangeText={(email) => setEmail(email)} />
             <MyTextInput keyboardType={null} placeholder='Password' image='lock' bolGone={true}
@@ -100,6 +104,7 @@ const SignInScreen = ({ navigation }) => {
               </TouchableOpacity>
             </View>
           </View> */}
+            </TouchableWithoutFeedback>
         </KeyboardAvoidingView>
     );
 }

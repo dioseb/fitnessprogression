@@ -75,9 +75,11 @@ const Sidebar = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            <Image source={require("../assets/images/profile.jpg")} style={styles.profileImg} />
-            {/* <Text style={{ fontWeight: "bold", fontSize: 16, marginTop: 10 }}>{login}</Text> */}
-            <Text style={{ color: "gray", marginBottom: 10 }}>{login.user.email}</Text>
+            <View style={styles.containerAvatar}>
+                <Image source={require("../assets/images/profile.jpg")} style={styles.profileImg} />
+                {/* <Text style={{ fontWeight: "bold", fontSize: 16, marginTop: 10 }}>{login}</Text> */}
+                <Text style={{ color: "gray", marginBottom: 10 }}>{login.user.email}</Text>
+            </View>
             <View style={styles.sidebarDivider}></View>
             <FlatList
                 style={{ width: "100%", marginLeft: 30 }}
@@ -101,7 +103,11 @@ const styles = StyleSheet.create({
         paddingTop: 40,
         alignItems: "center",
         flex: 1
-
+    },
+    containerAvatar: {
+        alignItems: "center",
+        width: "100%",
+        flex: 1
     },
     listItem: {
         height: 60,

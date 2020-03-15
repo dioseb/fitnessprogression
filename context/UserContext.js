@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { saveUser, deleteUser } from '@storage/UserAsyncStorage';
+import { saveUser, deleteUser } from '../storage/UserAsyncStorage';
 //import { sendEmail } from 'email';
 
 const initialState = {
