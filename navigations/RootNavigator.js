@@ -83,24 +83,7 @@ function DashboardDrawerNavigator() {
     <Drawer.Navigator
       initialRouteName='Dashboard'
       drawerType='slide'
-      drawerContent= { props => <Sidebar {...props}/> }
-      screenOptions={({ route }) => ({
-        drawerIcon: ({ focused, color, size }) => {
-          let iconName;
-
-          if (route.name === 'Dashboard') {
-            iconName = focused ? 'ios-desktop' : 'ios-desktop';
-          } else if (route.name === 'Settings') {
-            iconName = focused ? 'ios-settings' : 'ios-settings';
-          }
-          else if (route.name === 'Profile') {
-            iconName = focused ? 'ios-person' : 'ios-person';
-          }
-
-          // You can return any component that you like here!
-          return <Ionicons name={iconName} size={size} color={color} />;
-        }
-      })}>
+      drawerContent= { props => <Sidebar {...props}/> }>
       <Drawer.Screen
         name="Dashboard"
         component={MyDashboardStack}

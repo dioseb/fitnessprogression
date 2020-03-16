@@ -13,7 +13,6 @@ import {
 } from 'react-native';
 
 import { Ionicons } from '@expo/vector-icons';
-import * as Animatable from 'react-native-animatable';
 
 import bground from '../../assets/images/background.png';
 
@@ -42,7 +41,8 @@ const SignInScreen = ({ navigation }) => {
 
     return (
         <KeyboardAvoidingView
-        behavior="padding"  enabled
+            behavior="padding"
+            enabled
             style={{
                 flex: 1,
                 backgroundColor: 'white',
@@ -82,28 +82,7 @@ const SignInScreen = ({ navigation }) => {
                     <TouchableOpacity style={styles.loginBtn} onPress={() => iniciarSesion()}>
                         <Text style={styles.loginText}>LOGIN</Text>
                     </TouchableOpacity>
-                    {/* <TouchableOpacity onPress={() => goToScreen('SignUp')}>
-                        <Text style={styles.loginText}>Signup</Text>
-                    </TouchableOpacity> */}
                 </ImageBackground>
-
-                {/* <View style={[mainStyles.container, { padding: 50 }]}>
-            <MyTextInput keyboardType='email-address' placeholder='Email' image='user'
-              value={email} onChangeText={(email) => setEmail(email)} />
-            <MyTextInput keyboardType={null} placeholder='Password' image='lock' bolGone={true}
-              secureTextEntry={hidePassword}
-              onPress={() => setHidePassword(!hidePassword)}
-              value={password} onChangeText={(password) => setPassword(password)} />
-            <MyButton
-              titulo='Sign in'
-              onPress={() => iniciarSesion()}
-            />
-            <View>
-              <TouchableOpacity onPress={() => goToScreen(navigation, 'RecuperarPassword')}>
-                <Text style={[mainStyles.txtTransparent, { textDecorationLine: 'underline' }]}>Olvide mi Contraseña</Text>
-              </TouchableOpacity>
-            </View>
-          </View> */}
             </TouchableWithoutFeedback>
         </KeyboardAvoidingView>
     );
