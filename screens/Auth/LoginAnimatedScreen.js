@@ -231,66 +231,6 @@ const LoginAnimatedScreen = ({ navigation }) => {
                 }}>Sign In</Text>
             </TouchableOpacity>
             </View>
-        {/* <TapGestureHandler onHandlerStateChange={onStateChange}>
-          <Animated.View
-            style={{
-              ...styles.fixToText,
-              opacity: buttonOpacity,
-              transform: [{ translateY: buttonY }]
-            }}
-          >
-            <Text style={{ fontSize: 14, alignSelf: 'center', color: 'white' }}>Already have an account ? </Text>
-            <TouchableOpacity
-              style={styles.text}
-              onPress={() => goToScreen('SignIn')}
-            >
-              <Text
-                style={{
-                  fontSize: 14,
-                  alignSelf: 'center',
-                  color: 'rgb(33, 150, 243)'
-                }}>Sign In</Text>
-            </TouchableOpacity>
-          </Animated.View>
-        </TapGestureHandler> */}
-        {/* <Animated.View style={{
-          zIndex: textInputZindex,
-          opacity: textInputOpacity,
-          transform: [{ translateY: textInputY }],
-          height: height / 2.5,
-          ...StyleSheet.absoluteFill, top: null, justifyContent: 'center'
-        }}
-        >
-          <TapGestureHandler onHandlerStateChange={onCloseState}>
-            <Animated.View style={styles.closeButton}>
-              <Animated.Text style={{
-                fontSize: 15,
-                transform: [{ rotate: concat(rotateCross, 'deg') }]
-              }}>
-                X
-                </Animated.Text>
-            </Animated.View>
-          </TapGestureHandler>
-
-          <TextInput
-              placeholder="EMAIL"
-              style={styles.textInput}
-              placeholderTextColor="black"
-            />
-            <TextInput
-              placeholder="PASSWORD"
-              style={styles.textInput}
-              placeholderTextColor="black"
-            />
-
-            <Animated.View>
-            <SocialIcon
-                title='Sign In'
-                button
-                light
-              />
-            </Animated.View>
-        </Animated.View> */}
       </View>
     </KeyboardAvoidingView>
   );

@@ -52,51 +52,6 @@ const LoadingScreen = ({ navigation }) => {
     function goToScreen(routeName) {
         navigation.navigate(routeName)
     }
-    // React.useEffect(() => {
-    //     isUserStorageLoggedIn(loginAction);
-    // }, [isUserStorageLoggedIn]);
-
-    // const isUserStorageLoggedIn = React.useCallback(async (loginAction) => {
-    //     const response = await getUser();
-    //     setStorageUser(response);
-    //     console.log(`Response from LoadingScreen : ${response}`);
-    //     console.log(`isUserLoggedIn : ${isUserLoggedIn}`);
-
-    //     if (response == null) {
-    //         setTimeout(() => {
-    //             goToScreen('LoginAnimated')
-    //         }, 2000)
-    //         return
-    //     }
-
-    //     loginAction({ type: 'sing-in', data: response })
-    //     setTimeout(() => {
-    //         goToScreen('Dashboard')
-    //     }, 2000)
-    // }, [navigation]);
-    // //----------------------------------------------------------
-
-    // function goToScreen(routeName) {
-    //     navigation.navigate(routeName)
-    // }
-
-    // // FIREBASE
-    // const isUserLoggedIn = React.useCallback(() => {
-    //     API.auth()
-    //         .onAuthStateChanged((user) => {
-    //             //console.log("user connected", !!user);
-    //             //console.log("user :", user);
-    //             user ? goToScreen('Dashboard') : goToScreen('LoginAnimated')
-    //         });
-    // }, [navigation]);
-
-    // React.useEffect(() => {
-    //     setTimeout(() => {
-    //         //console.log('This will run after 2 second!');
-    //         isUserLoggedIn();
-    //     }, 2000);
-    // }, [isUserLoggedIn]);
-    // //------------------------------------------------------------
 
     return (
         <ImageBackground source={bground} style={styles.backgroundContainer}>
@@ -125,8 +80,5 @@ const styles = StyleSheet.create({
         height: null,
         justifyContent: 'center',
         alignItems: 'center'
-    },
-    activityIndicator: {
-        color: 'white'
     }
 });
