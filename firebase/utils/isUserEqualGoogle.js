@@ -1,7 +1,7 @@
 import API from './firebase';
 
 const isUserEqualGoogle = (googleUser, firebaseUser) => {
-    console.log(`isUserEqual Called !!!`);
+    console.log(`4. isUserEqual Called`);
     if (firebaseUser) {
         const { providerData } = firebaseUser;
         for (let i = 0; i < providerData.length; i++) {

@@ -48,7 +48,6 @@ const UserContext = React.createContext(initialState)
 function UserProvider(props) {
 
     const [login, loginAction] = React.useReducer(userReducer, initialState)
-
     return (
         <UserContext.Provider value={[login, loginAction]}>
             {props.children}

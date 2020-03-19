@@ -8,7 +8,7 @@ import { iosClientId, androidClientId } from '../config/google_config';
 
 const signInWithGoogleAsync = async () => {
     
-    console.log("Button Clicked !!!");
+    console.log("1. signInWithGoogleAsync called");
     try {
         const result = await Google.logInAsync({
             iosClientId: iosClientId,
@@ -21,7 +21,7 @@ const signInWithGoogleAsync = async () => {
         // })
         if (result.type === 'success') {
             onSignInGoogle(result);
-            console.log(`Result.accessToken ${result.accessToken}`);
+            console.log(`2. Google AccessToken : ${result.accessToken}`);
 
             return result.accessToken;
         }

@@ -9,7 +9,6 @@ import { getUser } from '../../storage/UserAsyncStorage';
 import { UserContext } from '../../context/UserContext';
 
 const LoadingScreen = ({ navigation }) => {
-
     // ASYNC STORAGE
     const [login, loginAction] = React.useContext(UserContext)
 
@@ -22,25 +21,28 @@ const LoadingScreen = ({ navigation }) => {
         const response = await getUser();
 
         // FIREBASE
-        API.auth().onAuthStateChanged((user) => {
-            //console.log("user connected", !!user);
-            //console.log("user :", user);
+        console.log(`Firebase called from LoadingScreen`);
+        var unsubscribe = API.auth().onAuthStateChanged((user) => {
+            unsubscribe();
+            console.log("user connected", !!user);
+            console.log("user :", user);
             if (!user && response == null) {
-                console.log(`storageUser from LoadingScreen : ${JSON.stringify(response)}`);
-                console.log(`firebaseUser from LoadingScreen : ${JSON.stringify(user)}`);
-                goToScreen('LoginAnimated');
+                console.log(`1. storageUser from LoadingScreen : ${JSON.stringify(response)}`);
+                console.log(`1. firebaseUser from LoadingScreen : ${JSON.stringify(user)}`);
+                goToScreen('Auth');
             }
             else if (!user && response) {
-                console.log(`storageUser from LoadingScreen : ${JSON.stringify(response)}`);
-                console.log(`firebaseUser from LoadingScreen : ${JSON.stringify(user)}`);
+                console.log(`2. storageUser from LoadingScreen : ${JSON.stringify(response)}`);
+                console.log(`2. firebaseUser from LoadingScreen : ${JSON.stringify(user)}`);
                 loginAction({ type: 'sing-in', data: response })
                 setTimeout(() => {
                     goToScreen('Dashboard');
                 }, 2000)
             }
             else {
-                console.log(`storageUser from LoadingScreen : ${JSON.stringify(response)}`);
-                console.log(`firebaseUser from LoadingScreen : ${JSON.stringify(user)}`);
+                console.log(`3. storageUser from LoadingScreen : ${JSON.stringify(response)}`);
+                console.log(`3. firebaseUser from LoadingScreen : ${JSON.stringify(user)}`);
+                loginAction({ type: 'sing-in', data: user })
                 setTimeout(() => {
                     goToScreen('Dashboard');
                 }, 2000)

@@ -46,7 +46,7 @@ const Sidebar = ({ navigation }) => {
 
         if (response == null) {
             console.log("FetchUser response null : ", JSON.stringify(response));
-            goToScreen('LoginAnimated');
+            goToScreen('Auth');
             return
         }
 
@@ -55,18 +55,20 @@ const Sidebar = ({ navigation }) => {
     }
 
     function goToScreen(routeName) {
-        navigation.navigate(routeName)
+        navigation.push(routeName)
     }
 
     function desconectarse() {
+        console.log("desconectarse called");
         loginAction({
             type: 'sign-out',
             data: {}
         })
-        goToScreen('LoginAnimated')
+        goToScreen('Auth')
     }
 
     function signOut() {
+        console.log("signOut called");
         SignOut();
         desconectarse();
     }

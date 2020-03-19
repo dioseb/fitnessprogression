@@ -23,8 +23,8 @@ const Stack = createStackNavigator();
 
 function AuthStack() {
   return (
-    <Stack.Navigator initialRouteName='Loading' headerMode="none" screenOptions={{gestureEnabled: false}}>
-      <Stack.Screen name="Loading" component={Loading} />
+    <Stack.Navigator initialRouteName='LoginAnimated' headerMode="none" screenOptions={{ gestureEnabled: false }}>
+      {/* <Stack.Screen name="Loading" component={Loading} /> */}
       <Stack.Screen name="SignUp" component={SignUp} />
       <Stack.Screen name="SignIn" component={SignIn} />
       <Stack.Screen name="PasswordLost" component={PasswordLost} />
@@ -83,7 +83,7 @@ function DashboardDrawerNavigator() {
     <Drawer.Navigator
       initialRouteName='Dashboard'
       drawerType='slide'
-      drawerContent= { props => <Sidebar {...props}/> }>
+      drawerContent={props => <Sidebar {...props} />}>
       <Drawer.Screen
         name="Dashboard"
         component={MyDashboardStack}
@@ -113,18 +113,18 @@ function HomeStackNavigator() {
 function MyDashboardStack() {
   return (
     <Stack.Navigator
-    screenOptions={{
-      headerTitleAlign: 'center'
-    }}>
-      <Stack.Screen 
-        name="Dashboard" 
-        component={Dashboard} 
+      screenOptions={{
+        headerTitleAlign: 'center'
+      }}>
+      <Stack.Screen
+        name="Dashboard"
+        component={Dashboard}
         options={
           ({ navigation }) => {
-          return {
-            header: () => <Header title='Dashboard' navigation={navigation} />
-          }
-        }}
+            return {
+              header: () => <Header title='Dashboard' navigation={navigation} />
+            }
+          }}
       />
     </Stack.Navigator>
   );
@@ -133,15 +133,15 @@ function MyDashboardStack() {
 function MySettingsStack() {
   return (
     <Stack.Navigator>
-      <Stack.Screen 
-      name="Settings" 
-      component={Settings}
-      options={
-        ({ navigation }) => {
-        return {
-          header: () => <Header title='Settings' navigation={navigation} />
-        }
-      }} />
+      <Stack.Screen
+        name="Settings"
+        component={Settings}
+        options={
+          ({ navigation }) => {
+            return {
+              header: () => <Header title='Settings' navigation={navigation} />
+            }
+          }} />
     </Stack.Navigator>
   );
 }
@@ -149,29 +149,39 @@ function MySettingsStack() {
 function MyProfileStack() {
   return (
     <Stack.Navigator>
-      <Stack.Screen 
-      name="Profile" 
-      component={Profile}
-      options={
-        ({ navigation }) => {
-        return {
-          header: () => <Header title='Profile' navigation={navigation} />
-        }
-      }} />
+      <Stack.Screen
+        name="Profile"
+        component={Profile}
+        options={
+          ({ navigation }) => {
+            return {
+              header: () => <Header title='Profile' navigation={navigation} />
+            }
+          }} />
     </Stack.Navigator>
   );
+}
+
+const RootStack = createStackNavigator();
+const RootStackScreen = () => {
+  return(
+  <RootStack.Navigator initialRouteName='Loading' headerMode="none" screenOptions={{
+    gestureEnabled: false
+    , headerTitleAlign: 'center'
+  }}>
+    <RootStack.Screen name="Loading" component={Loading} />
+    <RootStack.Screen name="Auth" component={AuthStack} />
+    <RootStack.Screen name="Dashboard" component={DashboardDrawerNavigator} />
+    {/* <Stack.Screen name="Dashboard" component={DashboardTabNavigator}/> */}
+    {/* <Stack.Screen name="Dashboard" component={HomeStackNavigator}/> */}
+  </RootStack.Navigator>
+  )
 }
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName='Auth' headerMode="none" screenOptions={{gestureEnabled: false
-      ,headerTitleAlign: 'center'}}>
-        <Stack.Screen name="Auth" component={AuthStack} />
-        <Stack.Screen name="Dashboard" component={DashboardDrawerNavigator} />
-        {/* <Stack.Screen name="Dashboard" component={DashboardTabNavigator}/> */}
-        {/* <Stack.Screen name="Dashboard" component={HomeStackNavigator}/> */}
-      </Stack.Navigator>
+      <RootStackScreen />
     </NavigationContainer>
   );
 }

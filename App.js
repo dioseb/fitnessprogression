@@ -21,38 +21,31 @@ function cacheImages(images) {
   });
 }
 
-export default class App extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      isReady: false
-    };
+async function _loadAssetsAsync() {
+  const imageAssets = cacheImages([require('./assets/images/background.png')]);
+
+  Font.loadAsync({
+    'Poppins-Light': require('./assets/fonts/Poppins-Light.ttf'),
+    'Poppins-Bold': require('./assets/fonts/Poppins-Bold.ttf'),
+    'Poppins-Medium': require('./assets/fonts/Poppins-Medium.ttf'),
+    'Poppins-SemiBold': require('./assets/fonts/Poppins-SemiBold.ttf'),
+  });
+
+  await Promise.all([...imageAssets]);
+}
+
+export default () => {
+  const [isReady, setIsReady] = React.useState(false);
+
+  if (!isReady) {
+    return <AppLoading
+      startAsync={_loadAssetsAsync}
+      onFinish={() => setIsReady(true)}
+      onError={console.warn}
+    />
   }
-
-  async _loadAssetsAsync() {
-    const imageAssets = cacheImages([require('./assets/images/background.png')]);
-
-    Font.loadAsync({
-      'Poppins-Light': require('./assets/fonts/Poppins-Light.ttf'),
-      'Poppins-Bold': require('./assets/fonts/Poppins-Bold.ttf'),
-      'Poppins-Medium': require('./assets/fonts/Poppins-Medium.ttf'),
-      'Poppins-SemiBold': require('./assets/fonts/Poppins-SemiBold.ttf'),
-    });
-
-    await Promise.all([...imageAssets]);
-  }
-
-  render() {
-    if (!this.state.isReady) {
-      return <AppLoading
-        startAsync={this._loadAssetsAsync}
-        onFinish={() => this.setState({ isReady: true })}
-        onError={console.warn}
-      />
-    }
-    return (
+  return (
     <UserProvider>
       <RootNavigator headerMode="none" />
     </UserProvider>)
-  }
 }
