@@ -5,18 +5,20 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from '@expo/vector-icons';
 
-import Sidebar from '../components/SideBar';
-import Header from '../components/Header';
+import AuthProvider from "./provider";
 
-import Loading from '../screens/Auth/LoadingScreen';
-import LoginAnimated from '../screens/Auth/LoginAnimatedScreen';
-import SignIn from '../screens/Auth/SignInScreen';
-import SignUp from '../screens/Auth/SignUpScreen';
-import PasswordLost from '../screens/Auth/PasswordLostScreen';
+import Sidebar from './components/SideBar';
+import Header from './components/Header';
 
-import Dashboard from '../screens/Home/DashboardScreen';
-import Profile from '../screens/Home/ProfileScreen';
-import Settings from '../screens/Home/SettingsScreen';
+import Loading from './screens/Auth/LoadingScreen';
+import LoginAnimated from './screens/Auth/LoginAnimatedScreen';
+import SignIn from './screens/Auth/SignInScreen';
+import SignUp from './screens/Auth/SignUpScreen';
+import PasswordLost from './screens/Auth/PasswordLostScreen';
+
+import Dashboard from './screens/Home/DashboardScreen';
+import Profile from './screens/Home/ProfileScreen';
+import Settings from './screens/Home/SettingsScreen';
 
 const Stack = createStackNavigator();
 
@@ -177,7 +179,7 @@ const RootStackScreen = () => {
   )
 }
 
-export default function App() {
+export default function App(props) {
   return (
       <NavigationContainer>
         {/* <Loading/>

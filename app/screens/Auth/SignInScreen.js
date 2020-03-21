@@ -12,33 +12,76 @@ import {
     Keyboard
 } from 'react-native';
 
+import Form from 'react-native-basic-form';
+import CTA from "../../components/CTA";
+import { Header, ErrorText } from "../../components/Shared";
+
+import * as api from "../../services/auth";
+import { useAuth } from "../../provider";
+
 import { Ionicons } from '@expo/vector-icons';
+import bground from '../../../assets/images/background.png';
 
-import bground from '../../assets/images/background.png';
+//import { UserContext } from '../../context/UserContext';
 
-import { UserContext } from '../../context/UserContext';
+export default function SignInScreen({ navigation }) {
 
-const SignInScreen = ({ navigation }) => {
+    //const [login, loginAction] = React.useContext(UserContext)
+    //1 - DECLARE VARIABLES
+    const [error, setError] = React.useState(null);
+    const [loading, setLoading] = React.useState(false);
+    const { handleLogin } = useAuth();
 
-    const [login, loginAction] = React.useContext(UserContext)
+    const [user, setUser] = React.useState({})
 
-    const [username, setUsername] = React.useState('');
+    const [username, setUsername] = React.useState('')
     const [password, setPassword] = React.useState('')
     const [hidePassword, setHidePassword] = React.useState(false)
 
-    function iniciarSesion() {
-        loginAction({
-            type: 'sign-up', data: {
-                username, password
+    // const fields = [
+    //     { name: 'email', label: 'Email Address', required: true },
+    //     { name: 'password', label: 'Password', required: true, secure: true }
+    // ];
+
+    async function onSubmit() {
+        console.log(`User : ${JSON.stringify(user)}`);
+        setLoading(true);
+
+        try {
+            let response = await api.login(user);
+
+            await handleLogin(response);
+
+            setLoading(false);
+
+            //check if username is null
+            let username = (response.email !== null);
+            if (username) {
+                navigation.navigate('App');
             }
-        })
-        goToScreen('Dashboard')
+            else {
+                navigation.replace('SignIn');
+            }
+        } catch (error) {
+            setError(error.message);
+            setLoading(false)
+        }
     }
+
+    // function iniciarSesion() {
+    //     loginAction({
+    //         type: 'sign-up', data: {
+    //             username, password
+    //         }
+    //     })
+    //     goToScreen('Dashboard')
+    // }
 
     function goToScreen(routeName) {
         navigation.navigate(routeName)
     }
 
+    //let formProps = { title: "Login", fields, onSubmit, loading };
     return (
         <KeyboardAvoidingView
             behavior="padding"
@@ -79,7 +122,7 @@ const SignInScreen = ({ navigation }) => {
                     <TouchableOpacity onPress={() => goToScreen('PasswordLost')}>
                         <Text style={styles.forgot}>Forgot Password?</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.loginBtn} onPress={() => iniciarSesion()}>
+                    <TouchableOpacity style={styles.loginBtn} onPress={() => onSubmit()}>
                         <Text style={styles.loginText}>LOGIN</Text>
                     </TouchableOpacity>
                 </ImageBackground>
@@ -88,14 +131,7 @@ const SignInScreen = ({ navigation }) => {
     );
 }
 
-export default SignInScreen;
-
 const styles = StyleSheet.create({
-    backgroundContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
     container: {
         flex: 1,
         backgroundColor: '#003f5c',

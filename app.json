@@ -32,11 +32,11 @@
             "reservedClientId": "com.googleusercontent.apps.566994980610-0lpb22vrk8286064pff7tbn7eele86c1"
         }
       },
-      "googleServicesFile": "./iOS/GoogleService-Info.plist"
+      "googleServicesFile": "./app/iOS/GoogleService-Info.plist"
     },
     "android": {
       "package": "com.medel.fitnessprogression",
-      "googleServicesFile": "./android/google-services.json"
+      "googleServicesFile": "./app/android/google-services.json"
     }
   }
 }

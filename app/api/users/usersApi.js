@@ -2,7 +2,7 @@ const PUSH_ENDPOINT_GETUSER = 'http://192.168.0.5:3000/api/users/';
 
 async function getById(id) {
     try {
-        console.log(`${PUSH_ENDPOINT_GETUSER}${id}`);
+        console.log(`UsersApi : ${PUSH_ENDPOINT_GETUSER}${id}`);
         const response = await fetch(`${PUSH_ENDPOINT_GETUSER}${id}`);
         return await response.json();
     } catch (error) {

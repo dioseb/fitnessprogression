@@ -23,7 +23,7 @@ import * as Animatable from 'react-native-animatable';
 
 const { width, height } = Dimensions.get('window');
 
-const LoginAnimatedScreen = ({ navigation }) => {
+export default function LoginAnimatedScreen({navigation}) {
 
   const {
     Value,
@@ -157,7 +157,7 @@ const LoginAnimatedScreen = ({ navigation }) => {
             <Circle r={height + 50} cx={width / 2} />
           </ClipPath>
           <Image
-            href={require('../../assets/images/background.png')}
+            href={require('../../../assets/images/background.png')}
             height={height + 50}
             width={width}
             preserveAspectRatio="xMidYMid slice"
@@ -174,7 +174,7 @@ const LoginAnimatedScreen = ({ navigation }) => {
                     height: 100,
                     margin: 100
                 }}
-                source={require('../../assets/images/instaIcon.png')}
+                source={require('../../../assets/images/instaIcon.png')}
             />
       </View>
       <View style={{ height: height / 2.5, justifyContent: 'center' }}>
@@ -236,7 +236,11 @@ const LoginAnimatedScreen = ({ navigation }) => {
   );
 }
 
-export default LoginAnimatedScreen;
+LoginAnimatedScreen.navigationOptions = ({}) => {
+  return {
+      title: ``
+  }
+};
 
 const styles = StyleSheet.create({
   fixToText: {

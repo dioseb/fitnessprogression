@@ -13,14 +13,13 @@ import {
 } from 'react-native';
 
 import { Ionicons } from '@expo/vector-icons';
-import bground from '../../assets/images/background.png';
+import bground from '../../../assets/images/background.png';
 import * as Animatable from 'react-native-animatable';
 
-import { UserContext } from '../../context/UserContext';
+//import { UserContext } from '../../context/UserContext';
 
 export default function PasswordLostScreen({ navigation }) {
-
-    const [login, loginAction] = React.useContext(UserContext)
+    //const [login, loginAction] = React.useContext(UserContext)
 
     const [email, setEmail] = React.useState('')
 
