@@ -3,13 +3,7 @@ import { saveUser, deleteUser } from '../storage/UserAsyncStorage';
 //import { sendEmail } from 'email';
 
 const initialState = {
-    user: {
-        nombre: '',
-        apellido: '',
-        email: '',
-        password: '',
-        confirmPassword: ''
-    },
+    user: {},
     activo: false
 }
 

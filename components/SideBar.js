@@ -40,17 +40,17 @@ const Sidebar = ({ navigation }) => {
     }, [])
 
     async function fetchUser() {
-        console.log("FetchUser called !!!!")
+        //console.log("FetchUser called !!!!")
 
         const response = await getById('8pUBIVF1ypQPiZeze7mNQanaxF53');
 
         if (response == null) {
-            console.log("FetchUser response null : ", JSON.stringify(response));
+            //console.log("FetchUser response null : ", JSON.stringify(response));
             goToScreen('Auth');
             return
         }
 
-        console.log("FetchUser response not null: ", JSON.stringify(response));
+        //console.log("FetchUser response not null: ", JSON.stringify(response));
         setUser(response);
     }
 
@@ -69,8 +69,8 @@ const Sidebar = ({ navigation }) => {
 
     function signOut() {
         console.log("signOut called");
-        SignOut();
         desconectarse();
+        SignOut();        
     }
 
     return (

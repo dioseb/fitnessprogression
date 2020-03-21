@@ -7,7 +7,7 @@ import NotificationsApi from '../../api/notifications/notificationsApi';
 import { USER_API_ENDPOINT } from '../../api/config/config';
 
 const onSignInGoogle = async googleUser => {
-    console.log('3. Google Auth Response :', googleUser);
+    console.log('1. Google Auth Response :', googleUser);
     // We need to register an Observer on Firebase Auth to make sure auth is initialized.
     var unsubscribe = API.auth().onAuthStateChanged(async (user) => {
         unsubscribe();

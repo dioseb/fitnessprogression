@@ -5,7 +5,6 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from '@expo/vector-icons';
 
-//import Sidebar from '../components/CustomDrawerContentComponent';
 import Sidebar from '../components/SideBar';
 import Header from '../components/Header';
 
@@ -165,23 +164,26 @@ function MyProfileStack() {
 const RootStack = createStackNavigator();
 const RootStackScreen = () => {
   return(
-  <RootStack.Navigator initialRouteName='Loading' headerMode="none" screenOptions={{
-    gestureEnabled: false
-    , headerTitleAlign: 'center'
-  }}>
-    <RootStack.Screen name="Loading" component={Loading} />
-    <RootStack.Screen name="Auth" component={AuthStack} />
-    <RootStack.Screen name="Dashboard" component={DashboardDrawerNavigator} />
-    {/* <Stack.Screen name="Dashboard" component={DashboardTabNavigator}/> */}
-    {/* <Stack.Screen name="Dashboard" component={HomeStackNavigator}/> */}
-  </RootStack.Navigator>
+    <RootStack.Navigator initialRouteName='Loading' headerMode="none" screenOptions={{
+      gestureEnabled: false
+      , headerTitleAlign: 'center'
+    }}>
+      <RootStack.Screen name="Loading" component={Loading} />
+      <RootStack.Screen name="Auth" component={AuthStack} />
+      <RootStack.Screen name="Dashboard" component={DashboardDrawerNavigator} />
+      {/* <Stack.Screen name="Dashboard" component={DashboardTabNavigator}/> */}
+      {/* <Stack.Screen name="Dashboard" component={HomeStackNavigator}/> */}
+    </RootStack.Navigator>
   )
 }
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <RootStackScreen />
-    </NavigationContainer>
+      <NavigationContainer>
+        {/* <Loading/>
+        <AuthStack />
+        <DashboardDrawerNavigator /> */}
+        <RootStackScreen />
+      </NavigationContainer>
   );
 }

@@ -11,7 +11,8 @@ import { UserContext } from '../../context/UserContext';
 const LoadingScreen = ({ navigation }) => {
     // ASYNC STORAGE
     const [login, loginAction] = React.useContext(UserContext)
-
+    const [fUser, setFUser] = React.useState({});
+    
     React.useEffect(() => {
         isUserLoggedIn(loginAction);
     }, [isUserLoggedIn]);
@@ -22,34 +23,34 @@ const LoadingScreen = ({ navigation }) => {
 
         // FIREBASE
         console.log(`Firebase called from LoadingScreen`);
-        var unsubscribe = API.auth().onAuthStateChanged((user) => {
-            unsubscribe();
-            console.log("user connected", !!user);
-            console.log("user :", user);
-            if (!user && response == null) {
-                console.log(`1. storageUser from LoadingScreen : ${JSON.stringify(response)}`);
-                console.log(`1. firebaseUser from LoadingScreen : ${JSON.stringify(user)}`);
+        API.auth().onAuthStateChanged(async (user) => {
+            //console.log("0. User connected", !!user);
+            //console.log("0. User :", user);
+            if (!user && response == null || response == '') {
+                console.log(`1. Response storageUser from LoadingScreen : ${JSON.stringify(response)}`);
+                console.log(`1. user firebaseUser from LoadingScreen : ${JSON.stringify(user)}`);
                 goToScreen('Auth');
             }
-            else if (!user && response) {
-                console.log(`2. storageUser from LoadingScreen : ${JSON.stringify(response)}`);
-                console.log(`2. firebaseUser from LoadingScreen : ${JSON.stringify(user)}`);
+            else if (!user && response || response == '') {
+                console.log(`2. Response storageUser from LoadingScreen : ${JSON.stringify(response)}`);
+                console.log(`2. User firebaseUser from LoadingScreen : ${JSON.stringify(user)}`);
                 loginAction({ type: 'sing-in', data: response })
-                setTimeout(() => {
-                    goToScreen('Dashboard');
-                }, 2000)
+                goToScreen('Dashboard');
             }
             else {
-                console.log(`3. storageUser from LoadingScreen : ${JSON.stringify(response)}`);
-                console.log(`3. firebaseUser from LoadingScreen : ${JSON.stringify(user)}`);
-                loginAction({ type: 'sing-in', data: user })
-                setTimeout(() => {
-                    goToScreen('Dashboard');
-                }, 2000)
+                //setFUser(user);
+                // console.log(`3. storageUser from LoadingScreen : ${JSON.stringify(response)}`);
+                // console.log(`3. firebaseUser from LoadingScreen : ${JSON.stringify(user)}`);
+                console.log(`3. fUser : ${JSON.stringify(user)}`);
+                iniciarSesion();          
             }
         });
     }, [navigation]);
 
+    function iniciarSesion() {
+        loginAction({ type: 'sign-up', data: fUser });
+        goToScreen('Dashboard');
+    }
 
     function goToScreen(routeName) {
         navigation.navigate(routeName)

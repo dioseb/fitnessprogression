@@ -6,53 +6,37 @@ import bground from '../../assets/images/background.png';
 
 import { UserContext } from '../../context/UserContext';
 import { getUser } from '../../storage/UserAsyncStorage';
-import { getById } from '../../api/users/usersApi';
-import SignOut from '../../firebase/utils/signOut';
-
-import MyButton from '../../components/MyButton';
-
-// function useBackButton(handler) {
-//     React.useEffect(() => {
-//         BackHandler.addEventListener("hardwareBackPress", handler)
-
-//         return () => {
-//             console.log('hardwareBackPress Close')
-//             BackHandler.removeEventListener("hardwareBackPress", handler)
-//         }
-//     }, [handler])
-// }
 
 function DashboardScreen({ navigation }) {
 
-    // useBackButton(signOut)
-    // const [login, loginAction] = React.useContext(UserContext)
-    // const [user, setUser] = React.useState('')
+    const [login, loginAction] = React.useContext(UserContext)
+    const [user, setUser] = React.useState('')
 
-    // React.useEffect(() => {
-    //     //fetchSesion();
-    //     fetchUser();
-    // }, [])
+    React.useEffect(() => {
+        fetchSesion();
+        //fetchUser();
+    }, [])
 
-    //console.log(`User : ${JSON.stringify(user)}`);
-    // if (user == "") {
-    //     return (
-    //         <ImageBackground source={bground} style={styles.backgroundContainer}>
-    //             <StatusBar translucent backgroundColor='rgba(0,0,0,0.2)' />
-    //             <Animatable.Image
-    //                 animation="rotate"
-    //                 easing="ease-out"
-    //                 iterationCount="infinite"
-    //                 style={{
-    //                     width: 50,
-    //                     height: 50,
-    //                     margin: 50
-    //                 }}
-    //                 source={require('../../assets/images/instaIcon.png')}
-    //             />
-    //         </ImageBackground>
-    //     )
-    // }
-    // else {
+    console.log(`0. User : ${JSON.stringify(user)}`);
+    if (user == "") {
+        return (
+            <ImageBackground source={bground} style={styles.backgroundContainer}>
+                <StatusBar translucent backgroundColor='rgba(0,0,0,0.2)' />
+                <Animatable.Image
+                    animation="rotate"
+                    easing="ease-out"
+                    iterationCount="infinite"
+                    style={{
+                        width: 50,
+                        height: 50,
+                        margin: 50
+                    }}
+                    source={require('../../assets/images/instaIcon.png')}
+                />
+            </ImageBackground>
+        )
+    }
+    else {
         return (
             <View style={{ flex: 1, alignItems: 'center' }}>
                 <StatusBar
@@ -60,24 +44,17 @@ function DashboardScreen({ navigation }) {
                     barStyle='dark-content'
                     translucent={true}
                 />
-                <Text style={{
-                    textAlign: 'center', fontSize: 30, marginTop: 200,
-                    fontFamily: 'Poppins-Bold'
-                }}>Welcome</Text>
                 {/* <Text style={{
                     textAlign: 'center', fontSize: 30, marginTop: 200,
                     fontFamily: 'Poppins-Bold'
-                }}>Welcome{'\n' + user.email +
-                    '\n' + user.first_name +
-                    '\n' + user.last_name
-                    }</Text> */}
-                {/* <MyButton
-                    titulo='Logout'
-                    onPress={() => signOut()}
-                /> */}
+                }}>Welcome</Text> */}
+                <Text style={{
+                    textAlign: 'center', fontSize: 30, marginTop: 200,
+                    fontFamily: 'Poppins-Bold'
+                }}>Welcome{ '\n' + user.email }</Text>
             </View>
         )
-    //}
+    }
 
     function goToScreen(routeName) {
         navigation.navigate(routeName)
@@ -109,21 +86,6 @@ function DashboardScreen({ navigation }) {
 
         console.log("FetchSession response : ", JSON.stringify(response));
         setUser(response);
-    }
-
-    function desconectarse() {
-        loginAction({
-            type: 'sign-out',
-            data: {}
-        })
-        goToScreen('Auth')
-    }
-
-    function signOut() {
-        if (login) {
-            desconectarse();
-        }
-        SignOut();
     }
 }
 

@@ -22,14 +22,14 @@ const SignInScreen = ({ navigation }) => {
 
     const [login, loginAction] = React.useContext(UserContext)
 
-    const [email, setEmail] = React.useState('')
+    const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('')
     const [hidePassword, setHidePassword] = React.useState(false)
 
     function iniciarSesion() {
         loginAction({
             type: 'sign-up', data: {
-                email, password
+                username, password
             }
         })
         goToScreen('Dashboard')
@@ -62,8 +62,8 @@ const SignInScreen = ({ navigation }) => {
                             style={styles.inputText}
                             placeholder="Email..."
                             placeholderTextColor="#666"
-                            value={email}
-                            onChangeText={(email) => setEmail(email)} />
+                            value={username}
+                            onChangeText={(username) => setUsername(username)} />
                     </View>
                     <View style={styles.inputView} >
                         <TextInput
