@@ -29,7 +29,7 @@
       "bundleIdentifier": "com.medel.fitnessprogression",
       "config": {
         "googleSignIn": {
-            "reservedClientId": "com.googleusercontent.apps.566994980610-0lpb22vrk8286064pff7tbn7eele86c1"
+          "reservedClientId": "com.googleusercontent.apps.566994980610-0lpb22vrk8286064pff7tbn7eele86c1"
         }
       },
       "googleServicesFile": "./app/iOS/GoogleService-Info.plist"

@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
 
     footerCTA: {
         fontSize: 16,
-        color: "#733AC2",
+        color: "#fff",
         fontWeight: "500"
     }
 });

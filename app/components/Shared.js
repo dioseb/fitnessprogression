@@ -31,14 +31,14 @@ ErrorText.defaultProps = {
 
 const styles = StyleSheet.create({
     header: {
-        height: 50,
+        marginTop: 150,
         justifyContent: "center"
     },
 
     headerText: {
-        fontSize: 25,
-        color: "#362068",
-        fontWeight: "400"
+        fontSize: 50,
+        color: "#fb5b5a",
+        fontWeight: "bold"
     },
 
     errorText:{

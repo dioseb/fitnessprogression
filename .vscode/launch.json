@@ -1,0 +1,13 @@
+{
+"configurations": [
+  {
+    "cwd": "${workspaceFolder}",
+    "name": "Attach to packager",
+    "program": "${workspaceRoot}/.vscode/launchReactNative.js",
+    "type": "reactnative",
+    "request": "attach",
+    "sourceMaps": true,
+    "outDir": "${workspaceRoot}/.vscode/.react"
+  }
+  ]
+}
