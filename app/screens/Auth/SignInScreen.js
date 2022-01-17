@@ -13,8 +13,8 @@ import {
 } from "react-native";
 
 //import Form from 'react-native-basic-form';
-import CTA from "../../components/CTA";
-import { Header, ErrorText } from "../../components/Shared";
+//import CTA from "../../components/CTA";
+//import { Header, ErrorText } from "../../components/Shared";
 
 import * as api from "../../services/auth";
 import { useAuth } from "../../provider";
@@ -33,9 +33,9 @@ export default function SignInScreen({ navigation }) {
 
   //const [user, setUser] = React.useState({})
 
-  // const [username, setUsername] = React.useState('')
-  // const [password, setPassword] = React.useState('')
-  // const [hidePassword, setHidePassword] = React.useState(false)
+  const [username, setUsername] = React.useState('')
+  const [password, setPassword] = React.useState('')
+  const [hidePassword, setHidePassword] = React.useState(false)
 
   const fields = [
     { name: "email", label: "Email Address", required: true },
@@ -82,67 +82,67 @@ export default function SignInScreen({ navigation }) {
   let formProps = { title: "LOGIN", fields, onSubmit, loading };
   return (
     // <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-    <ImageBackground source={bground} style={styles.container}>
-      <View style={styles.fixedView}>
-        <TouchableOpacity onPress={() => goToScreen("LoginAnimated")}>
-          <Ionicons name={"ios-arrow-back"} color={"white"} size={36} />
-        </TouchableOpacity>
-      </View>
-      <Header title={"Sign In"} />
-      <Form {...formProps}>
-        <CTA
-          ctaText={"Forgot Password?"}
-          onPress={() => navigation.navigate("ForgotPassword")}
-          style={{ marginTop: 20 }}
-        />
-      </Form>
-    </ImageBackground>
+    // <ImageBackground source={bground} style={styles.container}>
+    //   <View style={styles.fixedView}>
+    //     <TouchableOpacity onPress={() => goToScreen("LoginAnimated")}>
+    //       <Ionicons name={"ios-arrow-back"} color={"white"} size={36} />
+    //     </TouchableOpacity>
+    //   </View>
+    //   <Header title={"Sign In"} />
+    //   <Form {...formProps}>
+    //     <CTA
+    //       ctaText={"Forgot Password?"}
+    //       onPress={() => navigation.navigate("ForgotPassword")}
+    //       style={{ marginTop: 20 }}
+    //     />
+    //   </Form>
+    // </ImageBackground>
     // </TouchableWithoutFeedback>
-    // <KeyboardAvoidingView
-    //     behavior="padding"
-    //     enabled
-    //     style={{
-    //         flex: 1,
-    //         backgroundColor: 'white',
-    //         justifyContent: 'flex-end'
-    //     }}>
-    //     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-    //         <ImageBackground source={bground} style={styles.container}>
-    //             <View style={styles.fixedView}>
-    //                 <TouchableOpacity onPress={() => goToScreen('LoginAnimated')}>
-    //                     <Ionicons name={'ios-arrow-back'} color={'white'} size={36} />
-    //                 </TouchableOpacity>
-    //             </View>
-    //             <Text style={styles.logo}>Sign In</Text>
-    //             <View style={styles.inputView} >
-    //                 <TextInput
-    //                     keyboardType='email-address'
-    //                     style={styles.inputText}
-    //                     placeholder="Email..."
-    //                     placeholderTextColor="#666"
-    //                     value={username}
-    //                     onChangeText={(username) => setUsername(username)} />
-    //             </View>
-    //             <View style={styles.inputView} >
-    //                 <TextInput
-    //                     keyboardType={null}
-    //                     secureTextEntry={hidePassword}
-    //                     style={styles.inputText}
-    //                     placeholder="Password..."
-    //                     placeholderTextColor="#666"
-    //                     value={password}
-    //                     onPress={() => setHidePassword(!hidePassword)}
-    //                     onChangeText={(password) => setPassword(password)} />
-    //             </View>
-    //             <TouchableOpacity onPress={() => goToScreen('PasswordLost')}>
-    //                 <Text style={styles.forgot}>Forgot Password?</Text>
-    //             </TouchableOpacity>
-    //             <TouchableOpacity style={styles.loginBtn} onPress={() => onSubmit()}>
-    //                 <Text style={styles.loginText}>LOGIN</Text>
-    //             </TouchableOpacity>
-    //         </ImageBackground>
-    //     </TouchableWithoutFeedback>
-    // </KeyboardAvoidingView>
+    <KeyboardAvoidingView
+        behavior="padding"
+        enabled
+        style={{
+            flex: 1,
+            backgroundColor: 'white',
+            justifyContent: 'flex-end'
+        }}>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <ImageBackground source={bground} style={styles.container}>
+                <View style={styles.fixedView}>
+                    <TouchableOpacity onPress={() => goToScreen('LoginAnimated')}>
+                        <Ionicons name={'ios-arrow-back'} color={'white'} size={36} />
+                    </TouchableOpacity>
+                </View>
+                <Text style={styles.logo}>Sign In</Text>
+                <View style={styles.inputView} >
+                    <TextInput
+                        keyboardType='email-address'
+                        style={styles.inputText}
+                        placeholder="Email..."
+                        placeholderTextColor="#666"
+                        value={username}
+                        onChangeText={(username) => setUsername(username)} />
+                </View>
+                <View style={styles.inputView} >
+                    <TextInput
+                        keyboardType={null}
+                        secureTextEntry={hidePassword}
+                        style={styles.inputText}
+                        placeholder="Password..."
+                        placeholderTextColor="#666"
+                        value={password}
+                        onPress={() => setHidePassword(!hidePassword)}
+                        onChangeText={(password) => setPassword(password)} />
+                </View>
+                <TouchableOpacity onPress={() => goToScreen('PasswordLost')}>
+                    <Text style={styles.forgot}>Forgot Password?</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.loginBtn} onPress={() => onSubmit()}>
+                    <Text style={styles.loginText}>LOGIN</Text>
+                </TouchableOpacity>
+            </ImageBackground>
+        </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 }
 

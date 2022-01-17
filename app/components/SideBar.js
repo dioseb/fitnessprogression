@@ -17,7 +17,7 @@ import { useAuth } from "../provider";
 // import SignOut from '../firebase/utils/signOut';
 
 import DrawerItem from './DrawerItems';
-import routes from '../helpers/Routes';
+//import routes from '../helpers/Routes';
 import { Ionicons } from '@expo/vector-icons';
 
 // function useBackButton(handler) {
@@ -88,7 +88,7 @@ const Sidebar = ({ navigation }) => {
             <View style={styles.sidebarDivider}></View>
             <View style={styles.body}>
                 <FlatList
-                    data={routes}
+                    //data={routes}
                     renderItem={({ item }) => <DrawerItem item={item} navigate={navigation.navigate} />}
                     keyExtractor={item => item.name}/>
             </View>

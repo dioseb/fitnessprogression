@@ -182,10 +182,12 @@ const RootStackScreen = () => {
 export default function App(props) {
   return (
       <NavigationContainer>
-        {/* <Loading/>
-        <AuthStack />
-        <DashboardDrawerNavigator /> */}
-        <RootStackScreen />
+        {/* <Loading/> */}
+        <AuthProvider>
+          {/* <AuthStack /> */}
+          {/* <DashboardDrawerNavigator /> */}
+          <RootStackScreen />
+        </AuthProvider>
       </NavigationContainer>
   );
 }

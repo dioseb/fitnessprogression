@@ -1,4 +1,4 @@
-import React, { useMemo, useReducer, useContext } from "react";
+import React, { useMemo, useReducer, useContext, createContext } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 
@@ -11,7 +11,7 @@ export const USER_KEY = "user";
 export const keys = [TOKEN_KEY, USER_KEY];
 
 // CONTEXT ===================================
-const AuthContext = React.createContext();
+const AuthContext = createContext();
 
 function AuthProvider(props) {
   const [state, dispatch] = useReducer(reducer, initialState || {});
@@ -108,6 +108,8 @@ function AuthProvider(props) {
   );
 }
 
-const useAuth = () => useContext(AuthContext);
-export { AuthContext, useAuth };
+
 export default AuthProvider;
+
+const useAuth = () => useContext(AuthContext);
+export { useAuth };

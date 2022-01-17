@@ -4,9 +4,9 @@ import * as Font from "expo-font";
 import { Asset } from "expo-asset";
 import AppLoading from "expo-app-loading";
 
-import AuthProvider from "./app/provider";
+//import AuthProvider from "./app/provider";
 
-import Router from "./app/router";
+//import Router from "./app/router";
 import RootNavigator from "./app/rootNavigator";
 
 // import RootNavigator from './navigations/RootNavigator';
@@ -14,6 +14,7 @@ import RootNavigator from "./app/rootNavigator";
 
 import API from "./app/firebase/utils/firebase";
 import { firebaseConfig } from "./app/firebase/config/firebase_config";
+import { getFocusedRouteNameFromRoute } from "@react-navigation/core";
 API.initializeApp(firebaseConfig);
 
 function cacheImages(images) {
@@ -58,5 +59,5 @@ export default () => {
     );
   }
 
-  //return <Router />;
+  return <RootNavigator />;
 };

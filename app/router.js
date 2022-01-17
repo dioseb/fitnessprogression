@@ -1,8 +1,8 @@
 import * as React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 
-import AuthStack from "./routes/auth";
-import HomeStack from "./routes/home";
+// import AuthStack from "./routes/auth";
+// import HomeStack from "./routes/home";
 
 import AuthLoading from "./screens/Auth/LoadingScreen";
 import AuthProvider from "./provider";
@@ -78,8 +78,8 @@ const RootStackScreen = () => {
       , headerTitleAlign: 'center'
     }}>
       <RootStack.Screen name="Loading" component={AuthLoading} />
-      <RootStack.Screen name="Auth" component={AuthStack} />
-      <RootStack.Screen name="App" component={HomeStack} />
+      {/* <RootStack.Screen name="Auth" component={AuthStack} /> */}
+      {/* <RootStack.Screen name="App" component={HomeStack} /> */}
       {/* <Stack.Screen name="Dashboard" component={DashboardTabNavigator}/> */}
       {/* <Stack.Screen name="Dashboard" component={HomeStackNavigator}/> */}
     </RootStack.Navigator>
@@ -90,9 +90,9 @@ export default function Router(props) {
   return (
     <AuthProvider>
       <NavigationContainer>
-      {/* <Loading/>
-        <AuthStack />
-        <DashboardDrawerNavigator /> */}      
+      {/* <Loading/> */}
+        {/* <AuthStack /> */}
+        {/* <DashboardDrawerNavigator />       */}
         <RootStackScreen />
       </NavigationContainer>
     </AuthProvider>

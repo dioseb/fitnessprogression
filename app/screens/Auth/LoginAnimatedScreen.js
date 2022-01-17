@@ -42,34 +42,34 @@ export default function LoginAnimatedScreen({navigation}) {
     concat
   } = Animated;
 
-  function runTiming(clock, value, dest) {
-    const state = {
-      finished: new Value(0),
-      position: new Value(0),
-      time: new Value(0),
-      frameTime: new Value(0)
-    };
+  // function runTiming(clock, value, dest) {
+  //   const state = {
+  //     finished: new Value(0),
+  //     position: new Value(0),
+  //     time: new Value(0),
+  //     frameTime: new Value(0)
+  //   };
 
-    const config = {
-      duration: 1000,
-      toValue: new Value(0),
-      easing: Easing.inOut(Easing.ease)
-    };
+  //   const config = {
+  //     duration: 1000,
+  //     toValue: new Value(0),
+  //     easing: Easing.inOut(Easing.ease)
+  //   };
 
-    return block([
-      cond(clockRunning(clock), 0, [
-        set(state.finished, 0),
-        set(state.time, 0),
-        set(state.position, value),
-        set(state.frameTime, 0),
-        set(config.toValue, dest),
-        startClock(clock)
-      ]),
-      timing(clock, state, config),
-      cond(state.finished, stopClock(clock)),
-      state.position
-    ]);
-  }
+  //   return block([
+  //     cond(clockRunning(clock), 0, [
+  //       set(state.finished, 0),
+  //       set(state.time, 0),
+  //       set(state.position, value),
+  //       set(state.frameTime, 0),
+  //       set(config.toValue, dest),
+  //       startClock(clock)
+  //     ]),
+  //     timing(clock, state, config),
+  //     cond(state.finished, stopClock(clock)),
+  //     state.position
+  //   ]);
+  // }
 
   function goToScreen(routeName) {
     navigation.navigate(routeName)
@@ -77,29 +77,29 @@ export default function LoginAnimatedScreen({navigation}) {
 
   const buttonOpacity = new Value(1);
 
-  const onStateChange = event([
-    {
-      nativeEvent: ({ state }) =>
-        block([
-          cond(
-            eq(state, State.END),
-            set(buttonOpacity, runTiming(new Clock(), 1, 0))
-          )
-        ])
-    }
-  ]);
+  // const onStateChange = event([
+  //   {
+  //     nativeEvent: ({ state }) =>
+  //       block([
+  //         cond(
+  //           eq(state, State.END),
+  //           set(buttonOpacity, runTiming(new Clock(), 1, 0))
+  //         )
+  //       ])
+  //   }
+  // ]);
 
-  const onCloseState = event([
-    {
-      nativeEvent: ({ state }) =>
-        block([
-          cond(
-            eq(state, State.END),
-            set(buttonOpacity, runTiming(new Clock(), 0, 1))
-          )
-        ])
-    }
-  ]);
+  // const onCloseState = event([
+  //   {
+  //     nativeEvent: ({ state }) =>
+  //       block([
+  //         cond(
+  //           eq(state, State.END),
+  //           set(buttonOpacity, runTiming(new Clock(), 0, 1))
+  //         )
+  //       ])
+  //   }
+  // ]);
 
   const buttonY = interpolate(buttonOpacity, {
     inputRange: [0, 1],
@@ -113,29 +113,29 @@ export default function LoginAnimatedScreen({navigation}) {
     extrapolate: Extrapolate.CLAMP
   });
 
-  const textInputZindex = interpolate(buttonOpacity, {
-    inputRange: [0, 1],
-    outputRange: [1, -1],
-    extrapolate: Extrapolate.CLAMP
-  });
+  // const textInputZindex = interpolate(buttonOpacity, {
+  //   inputRange: [0, 1],
+  //   outputRange: [1, -1],
+  //   extrapolate: Extrapolate.CLAMP
+  // });
 
-  const textInputY = interpolate(buttonOpacity, {
-    inputRange: [0, 1],
-    outputRange: [0, 100],
-    extrapolate: Extrapolate.CLAMP
-  });
+  // const textInputY = interpolate(buttonOpacity, {
+  //   inputRange: [0, 1],
+  //   outputRange: [0, 100],
+  //   extrapolate: Extrapolate.CLAMP
+  // });
 
-  const textInputOpacity = interpolate(buttonOpacity, {
-    inputRange: [0, 1],
-    outputRange: [1, 0],
-    extrapolate: Extrapolate.CLAMP
-  });
+  // const textInputOpacity = interpolate(buttonOpacity, {
+  //   inputRange: [0, 1],
+  //   outputRange: [1, 0],
+  //   extrapolate: Extrapolate.CLAMP
+  // });
 
-  const rotateCross = interpolate(buttonOpacity, {
-    inputRange: [0, 1],
-    outputRange: [180, 360],
-    extrapolate: Extrapolate.CLAMP
-  })
+  // const rotateCross = interpolate(buttonOpacity, {
+  //   inputRange: [0, 1],
+  //   outputRange: [180, 360],
+  //   extrapolate: Extrapolate.CLAMP
+  // })
 
   return (
     <KeyboardAvoidingView
