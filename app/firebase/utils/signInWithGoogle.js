@@ -1,4 +1,4 @@
-import * as Google from 'expo-google-app-auth';
+import * as Google from 'expo-auth-session/providers/google';
 //import * as Google from 'expo-google-sign-in';
 
 import onSignInGoogle from './googleSignInFirebase';
@@ -6,14 +6,14 @@ import { iosClientId, androidClientId } from '../config/google_config';
 
 //import { GoogleSignIn } from 'expo';
 
-const signInWithGoogleAsync = async () => {
-    
+const signInWithGoogleAsync = async () => {    
     console.log("1. signInWithGoogleAsync called");
     try {
-        const result = await Google.logInAsync({
+        const result = await Google.useAuthRequest({
             iosClientId: iosClientId,
             androidClientId: androidClientId,
-            scopes: ['profile', 'email']
+            scopes: ['profile', 'email'],
+            permissions: ["public_profile", "email", "gender", "location"]
         });
         //PRODUCTION
         // await GoogleSignIn.initAsync({

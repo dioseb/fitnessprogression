@@ -12,10 +12,7 @@ import RootNavigator from "./app/rootNavigator";
 // import RootNavigator from './navigations/RootNavigator';
 // import { UserProvider } from './context/UserContext';
 
-import API from "./app/firebase/utils/firebase";
-import { firebaseConfig } from "./app/firebase/config/firebase_config";
 import { getFocusedRouteNameFromRoute } from "@react-navigation/core";
-API.initializeApp(firebaseConfig);
 
 function cacheImages(images) {
   return images.map((image) => {

@@ -8,15 +8,18 @@ import {
   KeyboardAvoidingView,
   Button,
   TouchableOpacity,
-  StatusBar
+  StatusBar,
+  Alert
 } from 'react-native';
 
 import { SocialIcon } from 'react-native-elements'
 import Svg, { Image, Circle, ClipPath } from 'react-native-svg';
-import Animated, { Easing } from 'react-native-reanimated';
+import Animated, { EasingNode } from 'react-native-reanimated';
 import { TapGestureHandler, State } from 'react-native-gesture-handler';
 
-import signInWithGoogleAsync from '../../firebase/utils/signInWithGoogle';
+//import signInWithGoogleAsync from '../../firebase/utils/signInWithGoogle';
+import signInWithGoogleAsync from '../../firebase/utils/signInWithGoogleNewWay';
+import loginWithCredential from '../../firebase/utils/loginWithCredential';
 import signInWithFacebookAsync from '../../firebase/utils/signInWithFacebook';
 
 import * as Animatable from 'react-native-animatable';
@@ -24,6 +27,23 @@ import * as Animatable from 'react-native-animatable';
 const { width, height } = Dimensions.get('window');
 
 export default function LoginAnimatedScreen({navigation}) {
+  const [googleAuthLoading, authWithGoogle] = signInWithGoogleAsync();
+
+  async function login(credential, data) {
+    const user = await loginWithCredential(credential, data);
+
+    navigation.navigate('Auth');
+  }
+
+  async function loginWithGoogle() {
+    try {
+      const [credential] = await authWithGoogle();
+      await login(credential);
+    } catch (error) {
+      console.error(error);
+      Alert.alert('Error', 'Something went wrong. Please try again later.');
+    }
+  }
 
   const {
     Value,
@@ -37,7 +57,7 @@ export default function LoginAnimatedScreen({navigation}) {
     stopClock,
     timing,
     clockRunning,
-    interpolate,
+    interpolateNode,
     Extrapolate,
     concat
   } = Animated;
@@ -53,7 +73,7 @@ export default function LoginAnimatedScreen({navigation}) {
   //   const config = {
   //     duration: 1000,
   //     toValue: new Value(0),
-  //     easing: Easing.inOut(Easing.ease)
+  //     easing: EasingNode.inOut(EasingNode.ease)
   //   };
 
   //   return block([
@@ -101,37 +121,37 @@ export default function LoginAnimatedScreen({navigation}) {
   //   }
   // ]);
 
-  const buttonY = interpolate(buttonOpacity, {
+  const buttonY = interpolateNode(buttonOpacity, {
     inputRange: [0, 1],
     outputRange: [100, 0],
     extrapolate: Extrapolate.CLAMP
   });
 
-  const bgY = interpolate(buttonOpacity, {
+  const bgY = interpolateNode(buttonOpacity, {
     inputRange: [0, 1],
     outputRange: [-height / 2.5 - 50, 0],
     extrapolate: Extrapolate.CLAMP
   });
 
-  // const textInputZindex = interpolate(buttonOpacity, {
+  // const textInputZindex = interpolateNode(buttonOpacity, {
   //   inputRange: [0, 1],
   //   outputRange: [1, -1],
   //   extrapolate: Extrapolate.CLAMP
   // });
 
-  // const textInputY = interpolate(buttonOpacity, {
+  // const textInputY = interpolateNode(buttonOpacity, {
   //   inputRange: [0, 1],
   //   outputRange: [0, 100],
   //   extrapolate: Extrapolate.CLAMP
   // });
 
-  // const textInputOpacity = interpolate(buttonOpacity, {
+  // const textInputOpacity = interpolateNode(buttonOpacity, {
   //   inputRange: [0, 1],
   //   outputRange: [1, 0],
   //   extrapolate: Extrapolate.CLAMP
   // });
 
-  // const rotateCross = interpolate(buttonOpacity, {
+  // const rotateCross = interpolateNode(buttonOpacity, {
   //   inputRange: [0, 1],
   //   outputRange: [180, 360],
   //   extrapolate: Extrapolate.CLAMP
@@ -214,7 +234,8 @@ export default function LoginAnimatedScreen({navigation}) {
             title='Sign in with Google'
             button
             type='google'
-            onPress={signInWithGoogleAsync}
+            onPress={loginWithGoogle}
+            disabled={!googleAuthLoading}
           />
         </Animated.View>
         <View style={{ ...styles.fixToText }}>

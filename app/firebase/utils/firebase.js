@@ -1,5 +1,12 @@
-import * as firebase from "firebase/app";
+import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 
-const API = firebase;
+import { firebaseConfig } from "../config/firebase_config";
 
-export default API;
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth();
+const db = getFirestore();
+
+export { auth, db };

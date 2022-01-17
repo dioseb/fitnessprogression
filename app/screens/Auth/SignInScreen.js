@@ -31,7 +31,7 @@ export default function SignInScreen({ navigation }) {
   const [loading, setLoading] = React.useState(false);
   const { handleLogin } = useAuth();
 
-  //const [user, setUser] = React.useState({})
+  const [user, setUser] = React.useState({})
 
   const [username, setUsername] = React.useState('')
   const [password, setPassword] = React.useState('')
@@ -43,6 +43,8 @@ export default function SignInScreen({ navigation }) {
   ];
 
   async function onSubmit() {
+    var user = { username: username, password: password };
+    setUser(user);
     console.log(`User : ${JSON.stringify(user)}`);
     setLoading(true);
 
